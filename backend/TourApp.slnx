@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TourApp.Api/TourApp.Api.csproj" />
+    <Project Path="src/TourApp.Application/TourApp.Application.csproj" />
+    <Project Path="src/TourApp.Domain/TourApp.Domain.csproj" />
+    <Project Path="src/TourApp.Infrastructure/TourApp.Infrastructure.csproj" />
+    <Project Path="src/TourApp.Shared/TourApp.Shared.csproj" />
+  </Folder>
+</Solution>
