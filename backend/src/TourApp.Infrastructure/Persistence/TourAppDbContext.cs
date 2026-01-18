@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TourApp.Domain.Purchases;
 using TourApp.Domain.Security;
 using TourApp.Domain.Tours;
 using TourApp.Domain.Users;
@@ -13,6 +14,8 @@ public class TourAppDbContext : DbContext
     public DbSet<LoginAttemptTracker> LoginAttemptTrackers { get; set; }
     public DbSet<Tour> Tours { get; set; }
     public DbSet<KeyPoint> KeyPoints { get; set; }
+    public DbSet<Purchase> Purchases { get; set; }
+    public DbSet<PurchasedTour> PurchasedTours { get; set; }
 
     public TourAppDbContext(DbContextOptions<TourAppDbContext> options) : base(options)
     {
@@ -28,6 +31,8 @@ public class TourAppDbContext : DbContext
         ConfigureLoginAttemptTracker(modelBuilder);
         ConfigureTour(modelBuilder);
         ConfigureKeyPoint(modelBuilder);
+        ConfigurePurchase(modelBuilder);
+        ConfigurePurchasedTour(modelBuilder);
     }
 
     private static void ConfigureTourist(ModelBuilder modelBuilder)
@@ -66,6 +71,10 @@ public class TourAppDbContext : DbContext
 
             entity.Property(t => t.WantsRecommendations)
                 .IsRequired();
+
+            entity.Property(t => t.BonusPoints)
+                .IsRequired()
+                .HasDefaultValue(0);
 
             entity.HasMany(t => t.Interests)
                 .WithOne()
@@ -244,7 +253,66 @@ public class TourAppDbContext : DbContext
                             .HasMaxLength(500);
 
                         entity.Property(kp => kp.Order)
-                            .IsRequired();
-                    });
-                }
-            }
+                                                    .IsRequired();
+                                            });
+                                        }
+
+                            private static void ConfigurePurchase(ModelBuilder modelBuilder)
+                            {
+                                modelBuilder.Entity<Purchase>(entity =>
+                                {
+                                    entity.ToTable("purchases");
+
+                                    entity.HasKey(p => p.Id);
+
+                                    entity.Property(p => p.TouristId)
+                                        .IsRequired();
+
+                                    entity.HasIndex(p => p.TouristId);
+
+                                    entity.Property(p => p.PurchasedAt)
+                                        .IsRequired();
+
+                                    entity.Property(p => p.TotalPrice)
+                                        .IsRequired()
+                                        .HasPrecision(18, 2);
+
+                                    entity.Property(p => p.BonusPointsUsed)
+                                        .IsRequired();
+
+                                    entity.Property(p => p.BonusPointsEarned)
+                                        .IsRequired();
+
+                                    entity.HasMany(p => p.PurchasedTours)
+                                        .WithOne()
+                                        .HasForeignKey(pt => pt.PurchaseId)
+                                        .OnDelete(DeleteBehavior.Cascade);
+
+                                    entity.Navigation(p => p.PurchasedTours).UsePropertyAccessMode(PropertyAccessMode.Field);
+                                });
+                            }
+
+                            private static void ConfigurePurchasedTour(ModelBuilder modelBuilder)
+                            {
+                                modelBuilder.Entity<PurchasedTour>(entity =>
+                                {
+                                    entity.ToTable("purchased_tours");
+
+                                    entity.HasKey(pt => pt.Id);
+
+                                    entity.Property(pt => pt.PurchaseId)
+                                        .IsRequired();
+
+                                    entity.Property(pt => pt.TourId)
+                                        .IsRequired();
+
+                                    entity.Property(pt => pt.TourName)
+                                        .IsRequired()
+                                        .HasMaxLength(200);
+
+                                    entity.Property(pt => pt.PriceAtPurchase)
+                                        .IsRequired()
+                                        .HasPrecision(18, 2);
+                                });
+                            }
+                        }
