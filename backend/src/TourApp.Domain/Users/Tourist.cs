@@ -9,6 +9,7 @@ public class Tourist
     public string LastName { get; private set; }
     public string PasswordHash { get; private set; }
     public bool WantsRecommendations { get; private set; }
+    public int BonusPoints { get; private set; }
 
     private readonly List<TouristInterest> _interests = new();
     public IReadOnlyCollection<TouristInterest> Interests => _interests.AsReadOnly();
@@ -45,6 +46,7 @@ public class Tourist
         LastName = lastName;
         PasswordHash = passwordHash;
         WantsRecommendations = wantsRecommendations;
+        BonusPoints = 0;
 
         foreach (var interest in interests)
         {
@@ -53,4 +55,23 @@ public class Tourist
     }
 
     private Tourist() { }
+
+    public void AddBonusPoints(int points)
+    {
+        if (points < 0)
+            throw new ArgumentException("Cannot add negative bonus points.", nameof(points));
+
+        BonusPoints += points;
+    }
+
+    public void SpendBonusPoints(int points)
+    {
+        if (points < 0)
+            throw new ArgumentException("Cannot spend negative bonus points.", nameof(points));
+
+        if (points > BonusPoints)
+            throw new InvalidOperationException($"Cannot spend {points} bonus points. Available: {BonusPoints}.");
+
+        BonusPoints -= points;
+    }
 }
