@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using TourApp.Domain.Problems;
 using TourApp.Domain.Purchases;
+using TourApp.Domain.Ratings;
 using TourApp.Domain.Security;
 using TourApp.Domain.Tours;
 using TourApp.Domain.Users;
@@ -16,6 +18,9 @@ public class TourAppDbContext : DbContext
     public DbSet<KeyPoint> KeyPoints { get; set; }
     public DbSet<Purchase> Purchases { get; set; }
     public DbSet<PurchasedTour> PurchasedTours { get; set; }
+    public DbSet<Rating> Ratings { get; set; }
+    public DbSet<Problem> Problems { get; set; }
+    public DbSet<ProblemStatusChangedEvent> ProblemEvents { get; set; }
 
     public TourAppDbContext(DbContextOptions<TourAppDbContext> options) : base(options)
     {
@@ -33,6 +38,9 @@ public class TourAppDbContext : DbContext
         ConfigureKeyPoint(modelBuilder);
         ConfigurePurchase(modelBuilder);
         ConfigurePurchasedTour(modelBuilder);
+        ConfigureRating(modelBuilder);
+        ConfigureProblem(modelBuilder);
+        ConfigureProblemEvent(modelBuilder);
     }
 
     private static void ConfigureTourist(ModelBuilder modelBuilder)
@@ -323,4 +331,116 @@ public class TourAppDbContext : DbContext
                                         .HasPrecision(18, 2);
                                 });
                             }
-                        }
+
+    private static void ConfigureRating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Rating>(entity =>
+        {
+            entity.ToTable("ratings");
+
+            entity.HasKey(r => r.Id);
+
+            entity.Property(r => r.TouristId)
+                .IsRequired();
+
+            entity.HasIndex(r => r.TouristId);
+
+            entity.Property(r => r.TourId)
+                .IsRequired();
+
+            entity.HasIndex(r => r.TourId);
+
+            entity.HasIndex(r => new { r.TouristId, r.TourId })
+                .IsUnique();
+
+            entity.Property(r => r.Score)
+                .IsRequired();
+
+            entity.Property(r => r.Comment)
+                .HasMaxLength(2000);
+
+            entity.Property(r => r.CreatedAt)
+                .IsRequired();
+        });
+    }
+
+    private static void ConfigureProblem(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Problem>(entity =>
+        {
+            entity.ToTable("problems");
+
+            entity.HasKey(p => p.Id);
+
+            entity.Property(p => p.TouristId)
+                .IsRequired();
+
+            entity.HasIndex(p => p.TouristId);
+
+            entity.Property(p => p.TourId)
+                .IsRequired();
+
+            entity.HasIndex(p => p.TourId);
+
+            entity.Property(p => p.Title)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            entity.Property(p => p.Description)
+                .IsRequired()
+                .HasMaxLength(2000);
+
+            entity.Property(p => p.Status)
+                .IsRequired()
+                .HasConversion<string>()
+                .HasMaxLength(20);
+
+            entity.HasIndex(p => p.Status);
+
+            entity.Property(p => p.CreatedAt)
+                .IsRequired();
+
+            entity.HasMany(p => p.Events)
+                .WithOne()
+                .HasForeignKey(e => e.ProblemId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.Navigation(p => p.Events).UsePropertyAccessMode(PropertyAccessMode.Field);
+        });
+    }
+
+    private static void ConfigureProblemEvent(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ProblemStatusChangedEvent>(entity =>
+        {
+            entity.ToTable("problem_events");
+
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.ProblemId)
+                .IsRequired();
+
+            entity.HasIndex(e => e.ProblemId);
+
+            entity.Property(e => e.OldStatus)
+                .IsRequired()
+                .HasConversion<string>()
+                .HasMaxLength(20);
+
+            entity.Property(e => e.NewStatus)
+                .IsRequired()
+                .HasConversion<string>()
+                .HasMaxLength(20);
+
+            entity.Property(e => e.ChangedAt)
+                .IsRequired();
+
+            entity.Property(e => e.ChangedByRole)
+                .IsRequired()
+                .HasMaxLength(20);
+
+            entity.Property(e => e.ChangedByUserId)
+                .IsRequired();
+        });
+    }
+}

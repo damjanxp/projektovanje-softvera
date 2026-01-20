@@ -6,4 +6,8 @@
     <Project Path="src/TourApp.Infrastructure/TourApp.Infrastructure.csproj" />
     <Project Path="src/TourApp.Shared/TourApp.Shared.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TourApp.Application.Tests/TourApp.Application.Tests.csproj" />
+    <Project Path="tests/TourApp.Domain.Tests/TourApp.Domain.Tests.csproj" />
+  </Folder>
 </Solution>
