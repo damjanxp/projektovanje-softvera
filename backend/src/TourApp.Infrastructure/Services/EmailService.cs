@@ -51,4 +51,51 @@ public class EmailService : IEmailService
 
         return Task.CompletedTask;
     }
+
+    public Task SendTourReminderAsync(string toEmail, string touristName, string tourName, DateTime startDate, string description)
+    {
+        _logger.LogInformation("========================================");
+        _logger.LogInformation("? TOUR REMINDER EMAIL");
+        _logger.LogInformation("========================================");
+        _logger.LogInformation("To: {Email}", toEmail);
+        _logger.LogInformation("Dear {Name},", touristName);
+        _logger.LogInformation("");
+        _logger.LogInformation("This is a reminder that your tour is starting soon!");
+        _logger.LogInformation("");
+        _logger.LogInformation("Tour: {TourName}", tourName);
+        _logger.LogInformation("Date: {StartDate:dddd, MMMM dd, yyyy 'at' HH:mm}", startDate);
+        _logger.LogInformation("");
+        _logger.LogInformation("Description: {Description}", description);
+        _logger.LogInformation("");
+        _logger.LogInformation("Please arrive at the meeting point 15 minutes before the start time.");
+        _logger.LogInformation("");
+        _logger.LogInformation("We look forward to seeing you!");
+        _logger.LogInformation("TourApp Team");
+        _logger.LogInformation("========================================");
+
+        return Task.CompletedTask;
+    }
+
+    public Task SendTourCancellationAsync(string toEmail, string touristName, string tourName, DateTime startDate, int bonusPointsAwarded)
+    {
+        _logger.LogInformation("========================================");
+        _logger.LogInformation("? TOUR CANCELLATION EMAIL");
+        _logger.LogInformation("========================================");
+        _logger.LogInformation("To: {Email}", toEmail);
+        _logger.LogInformation("Dear {Name},", touristName);
+        _logger.LogInformation("");
+        _logger.LogInformation("We regret to inform you that the following tour has been canceled:");
+        _logger.LogInformation("");
+        _logger.LogInformation("Tour: {TourName}", tourName);
+        _logger.LogInformation("Original Date: {StartDate:dddd, MMMM dd, yyyy 'at' HH:mm}", startDate);
+        _logger.LogInformation("");
+        _logger.LogInformation("As compensation, you have been awarded {BonusPoints} bonus points.", bonusPointsAwarded);
+        _logger.LogInformation("You can use these points for future purchases.");
+        _logger.LogInformation("");
+        _logger.LogInformation("We apologize for any inconvenience caused.");
+        _logger.LogInformation("TourApp Team");
+        _logger.LogInformation("========================================");
+
+        return Task.CompletedTask;
+    }
 }

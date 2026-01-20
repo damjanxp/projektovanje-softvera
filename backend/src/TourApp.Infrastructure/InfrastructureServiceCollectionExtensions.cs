@@ -2,9 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TourApp.Application.Admin.Services;
 using TourApp.Application.Auth.Services;
+using TourApp.Application.Cancellations.Services;
 using TourApp.Application.Cart.Services;
+using TourApp.Application.Notifications.Services;
 using TourApp.Application.Purchases.Interfaces;
 using TourApp.Application.Purchases.Services;
+using TourApp.Application.Replacements.Services;
 using TourApp.Application.Tours.Interfaces;
 using TourApp.Application.Tours.Services;
 using TourApp.Infrastructure.Persistence;
@@ -32,6 +35,9 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<ICartService, CartService>();
         services.AddScoped<IPurchaseService, PurchaseService>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IReplacementService, ReplacementService>();
+        services.AddScoped<ICancellationService, CancellationService>();
+        services.AddScoped<IReminderService, ReminderService>();
 
         return services;
     }
