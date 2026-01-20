@@ -15,6 +15,8 @@ public class Tour
     public decimal Price { get; private set; }
     public DateTime StartDate { get; private set; }
     public TourStatus Status { get; private set; }
+    public bool NeedsReplacement { get; private set; }
+    public DateTime? ReplacementRequestedAt { get; private set; }
     public IReadOnlyCollection<KeyPoint> KeyPoints => _keyPoints.AsReadOnly();
 
     public Tour(
@@ -51,6 +53,8 @@ public class Tour
         Price = price;
         StartDate = startDate;
         Status = TourStatus.Draft;
+        NeedsReplacement = false;
+        ReplacementRequestedAt = null;
     }
 
     private Tour() { }
@@ -94,5 +98,46 @@ public class Tour
             throw new InvalidOperationException("Tour is already canceled.");
 
         Status = TourStatus.Canceled;
+        NeedsReplacement = false;
+    }
+
+    public void RequestReplacement()
+    {
+        if (Status != TourStatus.Published)
+            throw new InvalidOperationException("Only published tours can request replacement.");
+
+        if (NeedsReplacement)
+            throw new InvalidOperationException("Tour is already requesting replacement.");
+
+        NeedsReplacement = true;
+        ReplacementRequestedAt = DateTime.UtcNow;
+    }
+
+    public void AssignNewGuide(Guid newGuideId)
+    {
+        if (newGuideId == Guid.Empty)
+            throw new ArgumentException("New GuideId cannot be empty.", nameof(newGuideId));
+
+        if (Status != TourStatus.Published)
+            throw new InvalidOperationException("Only published tours can be reassigned.");
+
+        if (!NeedsReplacement)
+            throw new InvalidOperationException("Tour is not requesting replacement.");
+
+        if (newGuideId == GuideId)
+            throw new InvalidOperationException("New guide cannot be the same as current guide.");
+
+        GuideId = newGuideId;
+        NeedsReplacement = false;
+        ReplacementRequestedAt = null;
+    }
+
+    public void CancelReplacement()
+    {
+        if (!NeedsReplacement)
+            throw new InvalidOperationException("Tour is not requesting replacement.");
+
+        NeedsReplacement = false;
+        ReplacementRequestedAt = null;
     }
 }

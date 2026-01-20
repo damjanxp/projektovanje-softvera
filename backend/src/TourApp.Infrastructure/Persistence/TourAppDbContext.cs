@@ -214,6 +214,14 @@ public class TourAppDbContext : DbContext
 
                         entity.HasIndex(t => t.Status);
 
+                        entity.Property(t => t.NeedsReplacement)
+                            .IsRequired()
+                            .HasDefaultValue(false);
+
+                        entity.Property(t => t.ReplacementRequestedAt);
+
+                        entity.HasIndex(t => t.NeedsReplacement);
+
                         entity.HasMany(t => t.KeyPoints)
                             .WithOne()
                             .HasForeignKey(kp => kp.TourId)
