@@ -5,8 +5,12 @@ using TourApp.Application.Auth.Services;
 using TourApp.Application.Cancellations.Services;
 using TourApp.Application.Cart.Services;
 using TourApp.Application.Notifications.Services;
+using TourApp.Application.Problems.Interfaces;
+using TourApp.Application.Problems.Services;
 using TourApp.Application.Purchases.Interfaces;
 using TourApp.Application.Purchases.Services;
+using TourApp.Application.Ratings.Interfaces;
+using TourApp.Application.Ratings.Services;
 using TourApp.Application.Replacements.Services;
 using TourApp.Application.Tours.Interfaces;
 using TourApp.Application.Tours.Services;
@@ -38,6 +42,10 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IReplacementService, ReplacementService>();
         services.AddScoped<ICancellationService, CancellationService>();
         services.AddScoped<IReminderService, ReminderService>();
+        services.AddScoped<IRatingRepository, RatingRepository>();
+        services.AddScoped<IRatingService, RatingService>();
+        services.AddScoped<IProblemRepository, ProblemRepository>();
+        services.AddScoped<IProblemService, ProblemService>();
 
         return services;
     }

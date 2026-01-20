@@ -98,4 +98,23 @@ public class EmailService : IEmailService
 
         return Task.CompletedTask;
     }
+
+    public Task SendProblemNotificationToGuideAsync(Guid guideId, string tourName, string problemTitle)
+    {
+        _logger.LogInformation("========================================");
+        _logger.LogInformation("?? NEW PROBLEM REPORTED EMAIL");
+        _logger.LogInformation("========================================");
+        _logger.LogInformation("To Guide: {GuideId}", guideId);
+        _logger.LogInformation("");
+        _logger.LogInformation("A new problem has been reported for your tour:");
+        _logger.LogInformation("");
+        _logger.LogInformation("Tour: {TourName}", tourName);
+        _logger.LogInformation("Problem: {ProblemTitle}", problemTitle);
+        _logger.LogInformation("");
+        _logger.LogInformation("Please review this problem in your dashboard.");
+        _logger.LogInformation("TourApp Team");
+        _logger.LogInformation("========================================");
+
+        return Task.CompletedTask;
+    }
 }
