@@ -1,0 +1,170 @@
+<div class="manage-tour-container">
+  <a routerLink="/guide/tours" class="back-link">← Back to My Tours</a>
+
+  @if (loading) {
+    <div class="loading">Loading tour...</div>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (!loading && !error && tour) {
+    <div class="tour-header-card">
+      <div class="tour-info">
+        <h1>{{ tour.name }}</h1>
+        <p class="tour-description">{{ tour.description }}</p>
+        <div class="tour-meta">
+          <span class="category">{{ getCategoryLabel(tour.category) }}</span>
+          <span class="difficulty">{{ getDifficultyLabel(tour.difficulty) }}</span>
+          <span class="date">{{ formatDate(tour.startDate) }}</span>
+          <span class="price">{{ formatPrice(tour.price) }}</span>
+        </div>
+      </div>
+      <div class="tour-status-section">
+        <span class="status-badge" [class]="getStatusClass(tour.status)">
+          {{ getStatusLabel(tour.status) }}
+        </span>
+        @if (isDraft) {
+          <button 
+            class="publish-btn"
+            [disabled]="!canPublish || publishing"
+            (click)="publishTour()"
+          >
+            @if (publishing) {
+              Publishing...
+            } @else {
+              Publish Tour
+            }
+          </button>
+          @if (!canPublish && tour.keyPoints.length < 2) {
+            <p class="publish-hint">Add at least 2 key points to publish</p>
+          }
+          @if (publishError) {
+            <p class="publish-error">{{ publishError }}</p>
+          }
+        }
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="keypoints-section">
+        <h2>Key Points ({{ tour.keyPoints.length }})</h2>
+        
+        @if (isDraft) {
+          <div class="add-keypoint-form">
+            <h3>Add New Key Point</h3>
+            <p class="form-hint">Click on the map to select location</p>
+            
+            @if (keyPointError) {
+              <div class="field-error-box">{{ keyPointError }}</div>
+            }
+
+            <form [formGroup]="keyPointForm" (ngSubmit)="addKeyPoint()">
+              <div class="form-group">
+                <label for="kpName">Name *</label>
+                <input 
+                  type="text" 
+                  id="kpName" 
+                  formControlName="name"
+                  placeholder="Key point name"
+                >
+                @if (keyPointForm.get('name')?.touched && keyPointForm.get('name')?.errors) {
+                  <span class="field-error">Name is required (min 2 characters)</span>
+                }
+              </div>
+
+              <div class="form-group">
+                <label for="kpDescription">Description *</label>
+                <textarea 
+                  id="kpDescription" 
+                  formControlName="description"
+                  placeholder="Describe this location..."
+                  rows="3"
+                ></textarea>
+                @if (keyPointForm.get('description')?.touched && keyPointForm.get('description')?.errors) {
+                  <span class="field-error">Description is required (min 5 characters)</span>
+                }
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Latitude *</label>
+                  <input 
+                    type="number" 
+                    formControlName="latitude"
+                    readonly
+                    placeholder="Click map"
+                  >
+                </div>
+                <div class="form-group">
+                  <label>Longitude *</label>
+                  <input 
+                    type="number" 
+                    formControlName="longitude"
+                    readonly
+                    placeholder="Click map"
+                  >
+                </div>
+              </div>
+              @if ((keyPointForm.get('latitude')?.touched || keyPointForm.get('longitude')?.touched) && 
+                   (keyPointForm.get('latitude')?.errors || keyPointForm.get('longitude')?.errors)) {
+                <span class="field-error">Please click on the map to select a location</span>
+              }
+
+              <div class="form-group">
+                <label for="kpImageUrl">Image URL (optional)</label>
+                <input 
+                  type="text" 
+                  id="kpImageUrl" 
+                  formControlName="imageUrl"
+                  placeholder="Leave empty if no image (optional)"
+                >
+              </div>
+
+              <button 
+                type="submit" 
+                class="add-keypoint-btn"
+                [disabled]="addingKeyPoint"
+              >
+                @if (addingKeyPoint) {
+                  Adding...
+                } @else {
+                  Add Key Point
+                }
+              </button>
+            </form>
+          </div>
+        }
+
+        @if (tour.keyPoints.length === 0) {
+          <p class="no-keypoints">No key points added yet.</p>
+        } @else {
+          <ol class="keypoints-list">
+            @for (kp of sortedKeyPoints; track kp.id) {
+              <li class="keypoint-item">
+                <strong>{{ kp.name }}</strong>
+                <p>{{ kp.description }}</p>
+                <span class="coords">{{ kp.latitude.toFixed(4) }}, {{ kp.longitude.toFixed(4) }}</span>
+              </li>
+            }
+          </ol>
+        }
+      </div>
+
+      <div class="map-section">
+        <h2>Map</h2>
+        <app-leaflet-map
+          [keyPoints]="tour.keyPoints"
+          [clickable]="isDraft"
+          [showPolyline]="true"
+          height="500px"
+          (mapClick)="onMapClick($event)"
+        ></app-leaflet-map>
+        @if (isDraft) {
+          <p class="map-hint">Click on the map to set key point location</p>
+        }
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,173 @@
+.my-tours-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.tours-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.tours-header h1 {
+  margin: 0;
+  color: #333;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-control label {
+  color: #666;
+  font-size: 14px;
+}
+
+.sort-control select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.create-tour-btn {
+  background-color: #27ae60;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.create-tour-btn:hover {
+  background-color: #219a52;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px;
+  color: #666;
+}
+
+.error-message {
+  background-color: #fee;
+  color: #c00;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.empty-state p {
+  color: #666;
+  margin-bottom: 24px;
+  font-size: 18px;
+}
+
+.create-first-btn {
+  background-color: #3388ff;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.create-first-btn:hover {
+  background-color: #2070e0;
+}
+
+.tours-table-wrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+.tours-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tours-table th,
+.tours-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.tours-table th {
+  background-color: #f8f9fa;
+  color: #666;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.tours-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.tour-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.tour-price {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-draft {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-published {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-canceled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.manage-btn {
+  color: #3388ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.manage-btn:hover {
+  text-decoration: underline;
+}

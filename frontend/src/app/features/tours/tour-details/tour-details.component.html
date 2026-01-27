@@ -1,0 +1,77 @@
+<div class="tour-details-container">
+  <a routerLink="/tours" class="back-link">← Back to Tours</a>
+
+  @if (loading) {
+    <div class="loading">Loading tour details...</div>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (!loading && !error && tour) {
+    <div class="tour-content">
+      <div class="tour-header">
+        <h1>{{ tour.name }}</h1>
+        <div class="tour-badges">
+          <span class="category-badge">{{ getCategoryLabel(tour.category) }}</span>
+          <span class="difficulty-badge" [class]="'difficulty-' + tour.difficulty">
+            {{ getDifficultyLabel(tour.difficulty) }}
+          </span>
+        </div>
+      </div>
+
+      <div class="tour-info-grid">
+        <div class="tour-description-section">
+          <h2>About this Tour</h2>
+          <p class="description">{{ tour.description }}</p>
+          
+          <div class="tour-meta-info">
+            <div class="meta-item">
+              <span class="meta-label">Start Date</span>
+              <span class="meta-value">{{ formatDate(tour.startDate) }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Price</span>
+              <span class="meta-value price">{{ formatPrice(tour.price) }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Key Points</span>
+              <span class="meta-value">{{ tour.keyPoints.length }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tour-keypoints-section">
+          <h2>Key Points</h2>
+          @if (tour.keyPoints.length === 0) {
+            <p class="no-keypoints">No key points added yet.</p>
+          } @else {
+            <ol class="keypoints-list">
+              @for (kp of sortedKeyPoints; track kp.id) {
+                <li class="keypoint-item">
+                  <strong>{{ kp.name }}</strong>
+                  <p>{{ kp.description }}</p>
+                  @if (kp.imageUrl) {
+                    <img [src]="kp.imageUrl" [alt]="kp.name" class="keypoint-image">
+                  }
+                </li>
+              }
+            </ol>
+          }
+        </div>
+      </div>
+
+      @if (tour.keyPoints.length > 0) {
+        <div class="map-section">
+          <h2>Tour Route</h2>
+          <app-leaflet-map
+            [keyPoints]="tour.keyPoints"
+            [showPolyline]="true"
+            height="450px"
+          ></app-leaflet-map>
+        </div>
+      }
+    </div>
+  }
+</div>

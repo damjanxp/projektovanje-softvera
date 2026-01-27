@@ -1,0 +1,334 @@
+.manage-tour-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  color: #3388ff;
+  text-decoration: none;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px;
+  color: #666;
+}
+
+.error-message {
+  background-color: #fee;
+  color: #c00;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.tour-header-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.tour-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.tour-info h1 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.tour-description {
+  color: #666;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.tour-meta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+
+.tour-meta .category {
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.tour-meta .difficulty {
+  color: #8e44ad;
+}
+
+.tour-meta .date {
+  color: #666;
+}
+
+.tour-meta .price {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.tour-status-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-draft {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-published {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-canceled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.publish-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  background-color: #27ae60;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.publish-btn:hover:not(:disabled) {
+  background-color: #219a52;
+}
+
+.publish-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.publish-hint {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+  text-align: right;
+}
+
+.publish-error {
+  font-size: 13px;
+  color: #e74c3c;
+  margin: 0;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.keypoints-section,
+.map-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+}
+
+.keypoints-section h2,
+.map-section h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.add-keypoint-form {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.add-keypoint-form h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.form-hint {
+  font-size: 13px;
+  color: #888;
+  margin: 0 0 16px 0;
+}
+
+.field-error-box {
+  background-color: #fee;
+  color: #c00;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3388ff;
+}
+
+.form-group input[readonly] {
+  background-color: #f8f9fa;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field-error {
+  display: block;
+  margin-top: 4px;
+  color: #e74c3c;
+  font-size: 12px;
+}
+
+.add-keypoint-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #3388ff;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-keypoint-btn:hover:not(:disabled) {
+  background-color: #2070e0;
+}
+
+.add-keypoint-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.no-keypoints {
+  color: #888;
+  font-style: italic;
+}
+
+.keypoints-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: kp;
+}
+
+.keypoint-item {
+  position: relative;
+  padding: 14px 14px 14px 44px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  counter-increment: kp;
+}
+
+.keypoint-item::before {
+  content: counter(kp);
+  position: absolute;
+  left: 10px;
+  top: 14px;
+  width: 24px;
+  height: 24px;
+  background: #3388ff;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.keypoint-item strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #333;
+  font-size: 14px;
+}
+
+.keypoint-item p {
+  margin: 0 0 6px 0;
+  color: #666;
+  font-size: 13px;
+}
+
+.keypoint-item .coords {
+  font-size: 11px;
+  color: #999;
+}
+
+.map-hint {
+  font-size: 13px;
+  color: #888;
+  margin: 12px 0 0 0;
+  text-align: center;
+}

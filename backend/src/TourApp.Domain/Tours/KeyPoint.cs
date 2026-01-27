@@ -31,9 +31,6 @@ public class KeyPoint
         if (string.IsNullOrWhiteSpace(description))
             throw new ArgumentException("Description cannot be null or empty.", nameof(description));
 
-        if (string.IsNullOrWhiteSpace(imageUrl))
-            throw new ArgumentException("ImageUrl cannot be null or empty.", nameof(imageUrl));
-
         if (order < 0)
             throw new ArgumentOutOfRangeException(nameof(order), "Order must be non-negative.");
 
@@ -43,7 +40,7 @@ public class KeyPoint
         Longitude = longitude;
         Name = name;
         Description = description;
-        ImageUrl = imageUrl;
+        ImageUrl = imageUrl ?? string.Empty;
         Order = order;
     }
 
