@@ -1,0 +1,124 @@
+<div class="create-tour-container">
+  <a routerLink="/guide/tours" class="back-link">← Back to My Tours</a>
+  
+  <div class="form-card">
+    <h1>Create New Tour</h1>
+    
+    @if (error) {
+      <div class="error-message">{{ error }}</div>
+    }
+
+    <form [formGroup]="tourForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Tour Name *</label>
+        <input 
+          type="text" 
+          id="name" 
+          formControlName="name"
+          placeholder="Enter tour name"
+        >
+        @if (tourForm.get('name')?.touched && tourForm.get('name')?.errors) {
+          <span class="field-error">
+            @if (tourForm.get('name')?.errors?.['required']) {
+              Tour name is required
+            } @else if (tourForm.get('name')?.errors?.['minlength']) {
+              Name must be at least 3 characters
+            } @else if (tourForm.get('name')?.errors?.['maxlength']) {
+              Name cannot exceed 100 characters
+            }
+          </span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description *</label>
+        <textarea 
+          id="description" 
+          formControlName="description"
+          placeholder="Describe your tour..."
+          rows="4"
+        ></textarea>
+        @if (tourForm.get('description')?.touched && tourForm.get('description')?.errors) {
+          <span class="field-error">
+            @if (tourForm.get('description')?.errors?.['required']) {
+              Description is required
+            } @else if (tourForm.get('description')?.errors?.['minlength']) {
+              Description must be at least 10 characters
+            }
+          </span>
+        }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="category">Category *</label>
+          <select id="category" formControlName="category">
+            @for (cat of categories; track cat.value) {
+              <option [value]="cat.value">{{ cat.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="difficulty">Difficulty *</label>
+          <select id="difficulty" formControlName="difficulty">
+            @for (diff of difficulties; track diff.value) {
+              <option [value]="diff.value">{{ diff.label }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="price">Price ($) *</label>
+          <input 
+            type="number" 
+            id="price" 
+            formControlName="price"
+            min="0"
+            step="0.01"
+            placeholder="0.00"
+          >
+          @if (tourForm.get('price')?.touched && tourForm.get('price')?.errors) {
+            <span class="field-error">
+              @if (tourForm.get('price')?.errors?.['required']) {
+                Price is required
+              } @else if (tourForm.get('price')?.errors?.['min']) {
+                Price cannot be negative
+              }
+            </span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="startDate">Start Date *</label>
+          <input 
+            type="date" 
+            id="startDate" 
+            formControlName="startDate"
+            [min]="getMinDate()"
+          >
+          @if (tourForm.get('startDate')?.touched && tourForm.get('startDate')?.errors) {
+            <span class="field-error">Start date is required</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <a routerLink="/guide/tours" class="cancel-btn">Cancel</a>
+        <button 
+          type="submit" 
+          class="submit-btn"
+          [disabled]="loading"
+        >
+          @if (loading) {
+            Creating...
+          } @else {
+            Create Tour
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="my-tours-container">
+  <div class="tours-header">
+    <h1>My Tours</h1>
+    <div class="header-actions">
+      <div class="sort-control">
+        <label for="sortOrder">Sort by date:</label>
+        <select id="sortOrder" [(ngModel)]="sortOrder" (change)="onSortChange()">
+          <option value="asc">Oldest First</option>
+          <option value="desc">Newest First</option>
+        </select>
+      </div>
+      <a routerLink="/guide/tours/create" class="create-tour-btn">+ Create Tour</a>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading">Loading your tours...</div>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (!loading && !error) {
+    @if (tours.length === 0) {
+      <div class="empty-state">
+        <p>You haven't created any tours yet.</p>
+        <a routerLink="/guide/tours/create" class="create-first-btn">Create Your First Tour</a>
+      </div>
+    } @else {
+      <div class="tours-table-wrapper">
+        <table class="tours-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Difficulty</th>
+              <th>Start Date</th>
+              <th>Price</th>
+              <th>Key Points</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (tour of tours; track tour.id) {
+              <tr>
+                <td class="tour-name">{{ tour.name }}</td>
+                <td>{{ getCategoryLabel(tour.category) }}</td>
+                <td>{{ getDifficultyLabel(tour.difficulty) }}</td>
+                <td>{{ formatDate(tour.startDate) }}</td>
+                <td class="tour-price">{{ formatPrice(tour.price) }}</td>
+                <td>{{ tour.keyPoints.length }}</td>
+                <td>
+                  <span class="status-badge" [class]="getStatusClass(tour.status)">
+                    {{ getStatusLabel(tour.status) }}
+                  </span>
+                </td>
+                <td>
+                  <a [routerLink]="['/guide/tours', tour.id]" class="manage-btn">Manage</a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

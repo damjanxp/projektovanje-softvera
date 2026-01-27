@@ -1,0 +1,49 @@
+<div class="tours-container">
+  <div class="tours-header">
+    <h1>Explore Tours</h1>
+    <div class="sort-control">
+      <label for="sortOrder">Sort by date:</label>
+      <select id="sortOrder" [(ngModel)]="sortOrder" (change)="onSortChange()">
+        <option value="asc">Oldest First</option>
+        <option value="desc">Newest First</option>
+      </select>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading">Loading tours...</div>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (!loading && !error) {
+    @if (tours.length === 0) {
+      <div class="empty-state">
+        <p>No tours available at the moment.</p>
+      </div>
+    } @else {
+      <div class="tours-grid">
+        @for (tour of tours; track tour.id) {
+          <div class="tour-card">
+            <div class="tour-card-header">
+              <h2>{{ tour.name }}</h2>
+              <span class="category-badge">{{ getCategoryLabel(tour.category) }}</span>
+            </div>
+            <p class="tour-description">{{ tour.description }}</p>
+            <div class="tour-meta">
+              <span class="difficulty">{{ getDifficultyLabel(tour.difficulty) }}</span>
+              <span class="date">{{ formatDate(tour.startDate) }}</span>
+              <span class="price">{{ formatPrice(tour.price) }}</span>
+            </div>
+            <div class="tour-keypoints">
+              <span>{{ tour.keyPoints.length }} key points</span>
+            </div>
+            <a [routerLink]="['/tours', tour.id]" class="view-details-btn">View Details</a>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
