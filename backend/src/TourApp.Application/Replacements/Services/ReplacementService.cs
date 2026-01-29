@@ -137,6 +137,8 @@ public class ReplacementService : IReplacementService
             Price = tour.Price,
             StartDate = tour.StartDate,
             Status = tour.Status,
+            NeedsReplacement = tour.NeedsReplacement,
+            ReplacementRequestedAt = tour.ReplacementRequestedAt,
             KeyPoints = tour.KeyPoints.Select(kp => new KeyPointDto
             {
                 Id = kp.Id,

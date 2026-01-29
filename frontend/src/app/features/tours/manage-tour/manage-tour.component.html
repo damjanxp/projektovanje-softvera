@@ -22,9 +22,11 @@
         </div>
       </div>
       <div class="tour-status-section">
-        <span class="status-badge" [class]="getStatusClass(tour.status)">
-          {{ getStatusLabel(tour.status) }}
-        </span>
+        <app-status-badge 
+          [status]="tour.status" 
+          [needsReplacement]="tour.needsReplacement || false">
+        </app-status-badge>
+        
         @if (isDraft) {
           <button 
             class="publish-btn"
@@ -44,6 +46,38 @@
             <p class="publish-error">{{ publishError }}</p>
           }
         }
+        
+        @if (isPublished && !isCanceled) {
+          <div class="replacement-section">
+            @if (replacementSuccess) {
+              <p class="replacement-success">{{ replacementSuccess }}</p>
+            }
+            @if (replacementError) {
+              <p class="replacement-error">{{ replacementError }}</p>
+            }
+            <button 
+              class="request-replacement-btn"
+              [disabled]="!canRequestReplacement || requestingReplacement"
+              (click)="requestReplacement()"
+              [title]="tour.needsReplacement ? 'Replacement already requested' : 'Request a replacement guide'"
+            >
+              @if (requestingReplacement) {
+                Requesting...
+              } @else if (tour.needsReplacement) {
+                Replacement Requested
+              } @else {
+                Request Replacement
+              }
+            </button>
+            @if (tour.needsReplacement) {
+              <p class="replacement-hint">This tour is awaiting a new guide</p>
+            }
+          </div>
+        }
+        
+        @if (isCanceled) {
+          <p class="canceled-notice">This tour has been canceled and cannot be modified.</p>
+        }
       </div>
     </div>
 
@@ -51,8 +85,8 @@
       <div class="keypoints-section">
         <h2>Key Points ({{ tour.keyPoints.length }})</h2>
         
-        @if (isDraft) {
-          <div class="add-keypoint-form">
+        @if (isDraft && !isCanceled) {
+        <div class="add-keypoint-form">
             <h3>Add New Key Point</h3>
             <p class="form-hint">Click on the map to select location</p>
             

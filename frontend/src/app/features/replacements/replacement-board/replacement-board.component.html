@@ -1,0 +1,68 @@
+<div class="replacement-board">
+<div class="board-header">
+  <h1>Replacement Board</h1>
+  <p class="subtitle">Tours that need a new guide</p>
+</div>
+
+@if (successMessage) {
+  <div class="alert alert-success">{{ successMessage }}</div>
+}
+
+  @if (error) {
+    <div class="alert alert-error">{{ error }}</div>
+  }
+
+  @if (loading) {
+    <div class="loading">Loading replacement requests...</div>
+  }
+
+  @if (!loading && tours.length === 0 && !error) {
+    <div class="empty-state">
+      <p>No tours currently need replacement.</p>
+      <p>Check back later!</p>
+    </div>
+  }
+
+  @if (!loading && tours.length > 0) {
+    <div class="tours-list">
+      @for (tour of tours; track tour.id) {
+        <div class="tour-card">
+          <div class="tour-info">
+            <h3 class="tour-name">{{ tour.name }}</h3>
+            <p class="tour-description">{{ tour.description }}</p>
+            <div class="tour-meta">
+              <span class="meta-item">
+                <strong>Date:</strong> {{ formatDate(tour.startDate) }}
+              </span>
+              <span class="meta-item">
+                <strong>Category:</strong> {{ getCategoryLabel(tour.category) }}
+              </span>
+              <span class="meta-item">
+                <strong>Difficulty:</strong> {{ getDifficultyLabel(tour.difficulty) }}
+              </span>
+              <span class="meta-item">
+                <strong>Price:</strong> {{ formatPrice(tour.price) }}
+              </span>
+              <span class="meta-item request-date">
+                <strong>Requested:</strong> {{ formatDate(tour.replacementRequestedAt) }}
+              </span>
+            </div>
+          </div>
+          <div class="tour-actions">
+            <button
+              class="btn btn-primary"
+              (click)="takeOver(tour)"
+              [disabled]="takingOver[tour.id]"
+            >
+              @if (takingOver[tour.id]) {
+                Taking over...
+              } @else {
+                Take Over
+              }
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

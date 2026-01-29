@@ -73,8 +73,7 @@ public class TourRepository : ITourRepository
                 .Include(t => t.KeyPoints)
                 .Where(t => t.NeedsReplacement 
                             && t.Status == TourStatus.Published 
-                            && t.GuideId != excludeGuideId
-                            && t.StartDate > DateTime.UtcNow)
+                            && t.GuideId != excludeGuideId)
                 .OrderBy(t => t.StartDate)
                 .ToListAsync();
         }

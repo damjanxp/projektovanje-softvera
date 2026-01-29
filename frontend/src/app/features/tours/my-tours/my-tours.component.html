@@ -52,9 +52,10 @@
                 <td class="tour-price">{{ formatPrice(tour.price) }}</td>
                 <td>{{ tour.keyPoints.length }}</td>
                 <td>
-                  <span class="status-badge" [class]="getStatusClass(tour.status)">
-                    {{ getStatusLabel(tour.status) }}
-                  </span>
+                  <app-status-badge 
+                    [status]="tour.status" 
+                    [needsReplacement]="tour.needsReplacement || false">
+                  </app-status-badge>
                 </td>
                 <td>
                   <a [routerLink]="['/guide/tours', tour.id]" class="manage-btn">Manage</a>

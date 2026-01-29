@@ -12,11 +12,12 @@ import {
   Difficulty, 
   TourStatus 
 } from '../../../shared/models';
+import { StatusBadgeComponent } from '../../../shared/components';
 
 @Component({
   selector: 'app-my-tours',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, StatusBadgeComponent],
   templateUrl: './my-tours.component.html',
   styleUrl: './my-tours.component.css'
 })

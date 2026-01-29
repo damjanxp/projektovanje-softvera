@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TourService, CartService, AuthService } from '../../../core/services';
-import { ApiResponse, TourDto, InterestLabels, DifficultyLabels, Interest, Difficulty } from '../../../shared/models';
+import { ApiResponse, TourDto, InterestLabels, DifficultyLabels, Interest, Difficulty, TourStatus } from '../../../shared/models';
+import { StatusBadgeComponent } from '../../../shared/components';
 
 @Component({
   selector: 'app-public-tours-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, StatusBadgeComponent],
   templateUrl: './public-tours-list.component.html',
   styleUrl: './public-tours-list.component.css'
 })
@@ -100,6 +101,14 @@ export class PublicToursListComponent implements OnInit {
   }
 
   formatPrice(price: number): string {
-    return `$${price.toFixed(2)}`;
+      return `$${price.toFixed(2)}`;
+    }
+
+    isCanceled(tour: TourDto): boolean {
+      return tour.status === TourStatus.Canceled;
+    }
+
+    canAddToCart(tour: TourDto): boolean {
+      return this.isTourist && !this.isCanceled(tour) && !this.isInCart(tour.id);
+    }
   }
-}

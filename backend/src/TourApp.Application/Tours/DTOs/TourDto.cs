@@ -14,5 +14,7 @@ public class TourDto
     public decimal Price { get; set; }
     public DateTime StartDate { get; set; }
     public TourStatus Status { get; set; }
+    public bool NeedsReplacement { get; set; }
+    public DateTime? ReplacementRequestedAt { get; set; }
     public List<KeyPointDto> KeyPoints { get; set; } = new();
 }
