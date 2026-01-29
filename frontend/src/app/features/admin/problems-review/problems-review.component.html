@@ -1,0 +1,67 @@
+<div class="problems-review-container">
+  <a routerLink="/admin-area" class="back-link">← Back to Admin Area</a>
+
+  <div class="page-header">
+    <h1>📋 Problems In Review</h1>
+    <p class="subtitle">Review and manage escalated tour problems</p>
+  </div>
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (loading) {
+    <div class="loading">Loading problems in review...</div>
+  }
+
+  @if (!loading && !error && problems.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">✅</div>
+      <h2>No Problems to Review</h2>
+      <p>There are currently no problems awaiting admin review.</p>
+    </div>
+  }
+
+  @if (!loading && !error && problems.length > 0) {
+    <div class="problems-grid">
+      @for (problem of problems; track problem.id) {
+        <div class="problem-card">
+          <div class="problem-header">
+            <h3>{{ problem.title }}</h3>
+            <span class="status-badge" [class]="getStatusClass(problem.status)">
+              {{ getStatusLabel(problem.status) }}
+            </span>
+          </div>
+
+          <div class="problem-info">
+            <p class="problem-description">{{ problem.description }}</p>
+            
+            <div class="problem-meta">
+              <div class="meta-row">
+                <span class="meta-label">Tour ID:</span>
+                <span class="meta-value">{{ problem.tourId }}</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">Tourist ID:</span>
+                <span class="meta-value">{{ problem.touristId }}</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">Created:</span>
+                <span class="meta-value">{{ formatDate(problem.createdAt) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-actions">
+            <a 
+              [routerLink]="['/problems', problem.id]" 
+              class="action-btn view-btn"
+            >
+              View Details & Take Action
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

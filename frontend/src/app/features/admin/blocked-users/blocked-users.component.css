@@ -1,0 +1,204 @@
+.blocked-users-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.back-link {
+  display: inline-block;
+  color: #3388ff;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  font-size: 14px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 2rem;
+}
+
+.subtitle {
+  color: #666;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h2 {
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.empty-state p {
+  color: #666;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.users-table {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f8f9fa;
+}
+
+th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #dee2e6;
+}
+
+tbody tr {
+  border-bottom: 1px solid #dee2e6;
+  transition: background-color 0.2s;
+}
+
+tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+td {
+  padding: 1rem;
+  color: #666;
+}
+
+.username {
+  font-weight: 500;
+  color: #333;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.role-tourist {
+  background: #667eea;
+  color: white;
+}
+
+.role-guide {
+  background: #28a745;
+  color: white;
+}
+
+.role-admin {
+  background: #fc4a1a;
+  color: white;
+}
+
+.role-unknown {
+  background: #6c757d;
+  color: white;
+}
+
+.count-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  background: #ffc107;
+  color: #212529;
+  font-weight: 600;
+}
+
+.count-badge.high-count {
+  background: #dc3545;
+  color: white;
+}
+
+.blocked-at {
+  font-size: 0.9rem;
+}
+
+.actions {
+  text-align: center;
+}
+
+.unblock-btn {
+  padding: 0.5rem 1.5rem;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.unblock-btn:hover:not(:disabled) {
+  background: #218838;
+}
+
+.unblock-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .users-table {
+    overflow-x: auto;
+  }
+  
+  table {
+    min-width: 600px;
+  }
+}

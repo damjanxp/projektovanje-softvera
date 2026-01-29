@@ -1,0 +1,176 @@
+<div class="problems-list-container">
+  <a routerLink="/guide-area" class="back-link">← Back to Guide Area</a>
+
+  <div class="page-header">
+    <h1>🚨 Tour Problems</h1>
+    <p class="subtitle">Manage problems reported by tourists on your tours</p>
+  </div>
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (loading) {
+    <div class="loading">Loading problems...</div>
+  }
+
+  @if (!loading && !error && problems.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">✅</div>
+      <h2>No Problems Reported</h2>
+      <p>Great news! There are no problems reported on your tours.</p>
+    </div>
+  }
+
+  @if (!loading && !error && problems.length > 0) {
+    <div class="problems-sections">
+      <!-- Pending Problems -->
+      @if (pendingProblems.length > 0) {
+        <div class="problem-section">
+          <h2 class="section-title">⏳ Pending Problems ({{ pendingProblems.length }})</h2>
+          <div class="problems-grid">
+            @for (item of pendingProblems; track item.problem.id) {
+              <div class="problem-card">
+                <div class="problem-header">
+                  <h3>{{ item.problem.title }}</h3>
+                  <span class="status-badge" [class]="getStatusClass(item.problem.status)">
+                    {{ getStatusLabel(item.problem.status) }}
+                  </span>
+                </div>
+
+                <div class="problem-info">
+                  <div class="tour-info">
+                    <span class="tour-label">Tour:</span>
+                    <span class="tour-name">{{ item.tourName }}</span>
+                  </div>
+                  <p class="problem-description">{{ item.problem.description }}</p>
+                  <p class="problem-date">Reported: {{ formatDate(item.problem.createdAt) }}</p>
+                </div>
+
+                <div class="problem-actions">
+                  <a 
+                    [routerLink]="['/problems', item.problem.id]" 
+                    class="action-btn view-btn"
+                  >
+                    View & Take Action
+                  </a>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- In Review Problems -->
+      @if (inReviewProblems.length > 0) {
+        <div class="problem-section">
+          <h2 class="section-title">📋 In Admin Review ({{ inReviewProblems.length }})</h2>
+          <div class="problems-grid">
+            @for (item of inReviewProblems; track item.problem.id) {
+              <div class="problem-card">
+                <div class="problem-header">
+                  <h3>{{ item.problem.title }}</h3>
+                  <span class="status-badge" [class]="getStatusClass(item.problem.status)">
+                    {{ getStatusLabel(item.problem.status) }}
+                  </span>
+                </div>
+
+                <div class="problem-info">
+                  <div class="tour-info">
+                    <span class="tour-label">Tour:</span>
+                    <span class="tour-name">{{ item.tourName }}</span>
+                  </div>
+                  <p class="problem-description">{{ item.problem.description }}</p>
+                  <p class="problem-date">Reported: {{ formatDate(item.problem.createdAt) }}</p>
+                </div>
+
+                <div class="problem-actions">
+                  <a 
+                    [routerLink]="['/problems', item.problem.id]" 
+                    class="action-btn view-btn"
+                  >
+                    View Details
+                  </a>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Resolved Problems -->
+      @if (resolvedProblems.length > 0) {
+        <div class="problem-section">
+          <h2 class="section-title">✅ Resolved Problems ({{ resolvedProblems.length }})</h2>
+          <div class="problems-grid">
+            @for (item of resolvedProblems; track item.problem.id) {
+              <div class="problem-card resolved">
+                <div class="problem-header">
+                  <h3>{{ item.problem.title }}</h3>
+                  <span class="status-badge" [class]="getStatusClass(item.problem.status)">
+                    {{ getStatusLabel(item.problem.status) }}
+                  </span>
+                </div>
+
+                <div class="problem-info">
+                  <div class="tour-info">
+                    <span class="tour-label">Tour:</span>
+                    <span class="tour-name">{{ item.tourName }}</span>
+                  </div>
+                  <p class="problem-description">{{ item.problem.description }}</p>
+                  <p class="problem-date">Reported: {{ formatDate(item.problem.createdAt) }}</p>
+                </div>
+
+                <div class="problem-actions">
+                  <a 
+                    [routerLink]="['/problems', item.problem.id]" 
+                    class="action-btn view-btn secondary"
+                  >
+                    View Details
+                  </a>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Rejected Problems -->
+      @if (rejectedProblems.length > 0) {
+        <div class="problem-section">
+          <h2 class="section-title">❌ Rejected by Admin ({{ rejectedProblems.length }})</h2>
+          <div class="problems-grid">
+            @for (item of rejectedProblems; track item.problem.id) {
+              <div class="problem-card rejected">
+                <div class="problem-header">
+                  <h3>{{ item.problem.title }}</h3>
+                  <span class="status-badge" [class]="getStatusClass(item.problem.status)">
+                    {{ getStatusLabel(item.problem.status) }}
+                  </span>
+                </div>
+
+                <div class="problem-info">
+                  <div class="tour-info">
+                    <span class="tour-label">Tour:</span>
+                    <span class="tour-name">{{ item.tourName }}</span>
+                  </div>
+                  <p class="problem-description">{{ item.problem.description }}</p>
+                  <p class="problem-date">Reported: {{ formatDate(item.problem.createdAt) }}</p>
+                </div>
+
+                <div class="problem-actions">
+                  <a 
+                    [routerLink]="['/problems', item.problem.id]" 
+                    class="action-btn view-btn secondary"
+                  >
+                    View Details
+                  </a>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

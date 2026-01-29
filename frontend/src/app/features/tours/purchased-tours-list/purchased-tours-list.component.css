@@ -1,0 +1,263 @@
+.purchased-tours-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.back-link {
+  display: inline-block;
+  color: #3388ff;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  font-size: 14px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 2rem;
+}
+
+.subtitle {
+  color: #666;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 4rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h2 {
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.empty-state p {
+  color: #666;
+  margin: 0 0 2rem 0;
+  font-size: 1.1rem;
+}
+
+.browse-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #3388ff;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.browse-btn:hover {
+  background: #1976d2;
+}
+
+.tours-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.tour-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tour-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.tour-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem;
+}
+
+.tour-header h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+}
+
+.tour-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.category-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.35rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
+
+.difficulty-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.difficulty-badge.difficulty-0 {
+  background-color: #27ae60;
+  color: white;
+}
+
+.difficulty-badge.difficulty-1 {
+  background-color: #f39c12;
+  color: white;
+}
+
+.difficulty-badge.difficulty-2 {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.tour-info {
+  padding: 1.5rem;
+}
+
+.tour-description {
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tour-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.meta-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.meta-value {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.meta-value.price {
+  color: #27ae60;
+}
+
+.tour-actions {
+  padding: 0 1.5rem 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.rate-btn {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.rate-btn:hover {
+  background-color: #e0a800;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+}
+
+.problem-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.problem-btn:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.view-details-link {
+  display: block;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  color: #3388ff;
+  text-decoration: none;
+  font-weight: 500;
+  border-top: 1px solid #e9ecef;
+  transition: background-color 0.2s;
+}
+
+.view-details-link:hover {
+  background-color: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+  .tours-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tour-actions {
+    flex-direction: column;
+  }
+}

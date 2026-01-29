@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
-  selector: 'app-tourist-area',
-  standalone: true,
-  imports: [CommonModule],
+selector: 'app-tourist-area',
+standalone: true,
+imports: [CommonModule, RouterLink],
   template: `
     <div class="protected-area tourist">
       <div class="area-content">
@@ -13,18 +14,18 @@ import { AuthService } from '../../core/services/auth.service';
         <p>Welcome, {{ username }}!</p>
         <p class="description">This is a protected area for tourists only.</p>
         <div class="features">
-          <div class="feature-item">
-            <h3>Browse Tours</h3>
+          <a routerLink="/tours" class="feature-item">
+            <h3>🌍 Browse Tours</h3>
             <p>Discover amazing tours from our guides</p>
-          </div>
-          <div class="feature-item">
-            <h3>My Purchases</h3>
-            <p>View your purchased tours</p>
-          </div>
-          <div class="feature-item">
-            <h3>Rate Tours</h3>
-            <p>Share your experience with others</p>
-          </div>
+          </a>
+          <a routerLink="/cart" class="feature-item">
+            <h3>🛒 My Cart</h3>
+            <p>View and manage your cart</p>
+          </a>
+          <a routerLink="/tourist/my-purchases" class="feature-item">
+            <h3>⭐ Rate & Report</h3>
+            <p>Rate your tours and report issues</p>
+          </a>
         </div>
       </div>
     </div>
@@ -74,6 +75,18 @@ import { AuthService } from '../../core/services/auth.service';
       padding: 1.5rem;
       border-radius: 8px;
       text-align: center;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .feature-item:hover {
+      background: #e9ecef;
+      border-color: #667eea;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
     }
 
     .feature-item h3 {
@@ -83,6 +96,7 @@ import { AuthService } from '../../core/services/auth.service';
 
     .feature-item p {
       font-size: 0.9rem;
+      margin: 0;
     }
   `]
 })

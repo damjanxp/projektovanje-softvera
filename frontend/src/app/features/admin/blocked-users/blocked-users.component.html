@@ -1,0 +1,75 @@
+<div class="blocked-users-container">
+  <a routerLink="/admin-area" class="back-link">← Back to Admin Area</a>
+
+  <div class="page-header">
+    <h1>🔒 Blocked Users</h1>
+    <p class="subtitle">Manage and unblock users who have been blocked</p>
+  </div>
+
+  @if (successMessage) {
+    <div class="success-message">{{ successMessage }}</div>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (loading) {
+    <div class="loading">Loading blocked users...</div>
+  }
+
+  @if (!loading && !error && blockedUsers.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">✅</div>
+      <h2>No Blocked Users</h2>
+      <p>There are currently no blocked users in the system.</p>
+    </div>
+  }
+
+  @if (!loading && !error && blockedUsers.length > 0) {
+    <div class="users-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Block Count</th>
+            <th>Blocked At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of blockedUsers; track user.username) {
+            <tr>
+              <td class="username">{{ user.username }}</td>
+              <td>
+                <span class="role-badge" [class]="getRoleBadgeClass(user.role)">
+                  {{ user.role }}
+                </span>
+              </td>
+              <td class="block-count">
+                <span class="count-badge" [class.high-count]="user.blockCount >= 3">
+                  {{ user.blockCount }}
+                </span>
+              </td>
+              <td class="blocked-at">{{ formatDate(user.blockedAt) }}</td>
+              <td class="actions">
+                <button
+                  class="unblock-btn"
+                  (click)="unblockUser(user.username)"
+                  [disabled]="unblocking[user.username]"
+                >
+                  @if (unblocking[user.username]) {
+                    Unblocking...
+                  } @else {
+                    Unblock
+                  }
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

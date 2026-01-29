@@ -1,0 +1,263 @@
+.problem-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.back-link {
+  display: inline-block;
+  color: #3388ff;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  font-size: 14px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.loading-text {
+  color: #666;
+  font-style: italic;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.problem-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.problem-header {
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.problem-header h1 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+  flex: 1;
+}
+
+.created-at {
+  margin: 0.5rem 0 0 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-resolved {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-in-review {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.status-rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.problem-description {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.problem-description h2 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.problem-description p {
+  margin: 0;
+  color: #555;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.actions-section {
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.actions-section h2 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.resolve-btn {
+  background: #28a745;
+  color: #fff;
+}
+
+.resolve-btn:hover:not(:disabled) {
+  background: #218838;
+}
+
+.review-btn {
+  background: #17a2b8;
+  color: #fff;
+}
+
+.review-btn:hover:not(:disabled) {
+  background: #138496;
+}
+
+.reject-btn {
+  background: #dc3545;
+  color: #fff;
+}
+
+.reject-btn:hover:not(:disabled) {
+  background: #c82333;
+}
+
+.reopen-btn {
+  background: #ffc107;
+  color: #212529;
+}
+
+.reopen-btn:hover:not(:disabled) {
+  background: #e0a800;
+}
+
+.no-actions {
+  color: #666;
+  font-style: italic;
+  margin: 0;
+}
+
+.events-section {
+  padding: 1.5rem;
+}
+
+.events-section h2 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.no-events {
+  color: #666;
+  font-style: italic;
+  margin: 0;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.event-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.event-status-change {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.old-status,
+.new-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.arrow {
+  color: #666;
+  font-weight: bold;
+}
+
+.event-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.changed-by {
+  font-weight: 500;
+}

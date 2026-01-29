@@ -1,0 +1,243 @@
+.problems-list-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.back-link {
+  display: inline-block;
+  color: #3388ff;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  font-size: 14px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 2rem;
+}
+
+.subtitle {
+  color: #666;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h2 {
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.empty-state p {
+  color: #666;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.problems-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.problem-section {
+  width: 100%;
+}
+
+.section-title {
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  font-size: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid #11998e;
+}
+
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.problem-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 4px solid #11998e;
+}
+
+.problem-card.resolved {
+  border-left-color: #28a745;
+  opacity: 0.85;
+}
+
+.problem-card.rejected {
+  border-left-color: #dc3545;
+  opacity: 0.85;
+}
+
+.problem-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.problem-header {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.problem-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  flex: 1;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.status-pending {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.status-resolved {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-in-review {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.status-rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.problem-info {
+  padding: 1.5rem;
+}
+
+.tour-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.tour-label {
+  font-weight: 600;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.tour-name {
+  color: #11998e;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.problem-description {
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.problem-date {
+  color: #999;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.problem-actions {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.action-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: #11998e;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+  background: #0e8073;
+}
+
+.action-btn.secondary {
+  background: #6c757d;
+}
+
+.action-btn.secondary:hover {
+  background: #5a6268;
+}
+
+@media (max-width: 768px) {
+  .problems-grid {
+    grid-template-columns: 1fr;
+  }
+}

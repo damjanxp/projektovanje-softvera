@@ -46,28 +46,28 @@
               </div>
 
               @if (isTourist) {
-                <div class="tour-cart-action">
-                  @if (isCanceled) {
-                    <p class="canceled-notice">This tour has been canceled and cannot be purchased.</p>
-                  } @else {
-                    <button 
-                      class="add-to-cart-btn"
-                      (click)="addToCart()"
-                      [disabled]="isInCart || addingToCart">
-                      @if (addingToCart) {
-                        Adding to Cart...
-                      } @else if (isInCart) {
-                        Already in Cart
-                      } @else {
-                        Add to Cart
-                      }
-                    </button>
-                  }
-                </div>
-              }
-            </div>
+                      <div class="tour-cart-action">
+                        @if (isCanceled) {
+                          <p class="canceled-notice">This tour has been canceled and cannot be purchased.</p>
+                        } @else {
+                          <button 
+                            class="add-to-cart-btn"
+                            (click)="addToCart()"
+                            [disabled]="isInCart || addingToCart">
+                            @if (addingToCart) {
+                              Adding to Cart...
+                            } @else if (isInCart) {
+                              Already in Cart
+                            } @else {
+                              Add to Cart
+                            }
+                          </button>
+                        }
+                      </div>
+                    }
+                  </div>
 
-        <div class="tour-keypoints-section">
+              <div class="tour-keypoints-section">
           <h2>Key Points</h2>
           @if (tour.keyPoints.length === 0) {
             <p class="no-keypoints">No key points added yet.</p>
@@ -88,15 +88,78 @@
       </div>
 
       @if (tour.keyPoints.length > 0) {
-        <div class="map-section">
-          <h2>Tour Route</h2>
-          <app-leaflet-map
-            [keyPoints]="tour.keyPoints"
-            [showPolyline]="true"
-            height="450px"
-          ></app-leaflet-map>
-        </div>
-      }
-    </div>
-  }
-</div>
+              <div class="map-section">
+                <h2>Tour Route</h2>
+                <app-leaflet-map
+                  [keyPoints]="tour.keyPoints"
+                  [showPolyline]="true"
+                  height="450px"
+                ></app-leaflet-map>
+              </div>
+            }
+
+            <!-- Ratings Section -->
+            <div class="ratings-section">
+              <div class="ratings-header">
+                <h2>⭐ Tourist Ratings & Reviews</h2>
+                @if (averageRating !== null && ratings.length > 0) {
+                  <div class="average-rating">
+                    <span class="rating-score">{{ averageRating.toFixed(1) }}</span>
+                    <div class="rating-stars">
+                      @for (star of getStarArray(Math.round(averageRating)); track $index) {
+                        <span class="star" [class.filled]="star">★</span>
+                      }
+                    </div>
+                    <span class="rating-count">({{ ratings.length }} {{ ratings.length === 1 ? 'rating' : 'ratings' }})</span>
+                  </div>
+                }
+              </div>
+
+              @if (loadingRatings) {
+                <p class="loading-text">Loading ratings...</p>
+              }
+
+              @if (!loadingRatings && ratings.length === 0) {
+                <div class="no-ratings">
+                  <p>No ratings yet. Be the first to rate this tour!</p>
+                </div>
+              }
+
+              @if (!loadingRatings && ratings.length > 0) {
+                <div class="ratings-list">
+                  @for (rating of ratings; track rating.id) {
+                    <div class="rating-card">
+                      <div class="rating-card-header">
+                        <div class="rating-stars-small">
+                          @for (star of getStarArray(rating.score); track $index) {
+                            <span class="star-small" [class.filled]="star">★</span>
+                          }
+                        </div>
+                        <span class="rating-date">{{ formatRatingDate(rating.createdAt) }}</span>
+                      </div>
+                      @if (rating.comment) {
+                        <p class="rating-comment">{{ rating.comment }}</p>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+
+            @if (isTourist) {
+              <div class="tour-actions-section">
+                <h2>Tour Actions</h2>
+                <div class="action-buttons">
+                  <a [routerLink]="['/tourist/ratings/new']" [queryParams]="{tourId: tour.id}" class="action-btn rate-btn">
+                    ⭐ Rate This Tour
+                  </a>
+                  <a [routerLink]="['/tourist/problems/new']" [queryParams]="{tourId: tour.id}" class="action-btn problem-btn">
+                    🚨 Report a Problem
+                  </a>
+                </div>
+                <p class="action-note">Note: Rating and reporting are only available for purchased tours.</p>
+              </div>
+            }
+          </div>
+        }
+      </div>

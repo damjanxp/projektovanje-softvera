@@ -1,0 +1,139 @@
+<div class="problem-details-container">
+  <a routerLink="/" class="back-link">← Back to Home</a>
+
+  @if (loading) {
+    <div class="loading">Loading problem details...</div>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (!loading && !error && problem) {
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="header-content">
+          <h1>{{ problem.title }}</h1>
+          <span class="status-badge" [class]="getStatusClass(problem.status)">
+            {{ getStatusLabel(problem.status) }}
+          </span>
+        </div>
+        <p class="created-at">Reported on {{ formatDate(problem.createdAt) }}</p>
+      </div>
+
+      <div class="problem-description">
+        <h2>Description</h2>
+        <p>{{ problem.description }}</p>
+      </div>
+
+      @if (actionSuccess) {
+        <div class="success-message">{{ actionSuccess }}</div>
+      }
+
+      @if (actionError) {
+        <div class="error-message">{{ actionError }}</div>
+      }
+
+      @if (isGuide || isAdmin) {
+        <div class="actions-section">
+          <h2>Actions</h2>
+          <div class="action-buttons">
+            @if (canResolve) {
+              <button
+                class="action-btn resolve-btn"
+                (click)="resolveProblem()"
+                [disabled]="actionLoading"
+              >
+                @if (actionLoading) {
+                  Processing...
+                } @else {
+                  ✓ Resolve
+                }
+              </button>
+            }
+
+            @if (canSendToReview) {
+              <button
+                class="action-btn review-btn"
+                (click)="sendToReview()"
+                [disabled]="actionLoading"
+              >
+                @if (actionLoading) {
+                  Processing...
+                } @else {
+                  📋 Send to Review
+                }
+              </button>
+            }
+
+            @if (canReject) {
+              <button
+                class="action-btn reject-btn"
+                (click)="rejectProblem()"
+                [disabled]="actionLoading"
+              >
+                @if (actionLoading) {
+                  Processing...
+                } @else {
+                  ✗ Reject
+                }
+              </button>
+            }
+
+            @if (canReopen) {
+              <button
+                class="action-btn reopen-btn"
+                (click)="reopenProblem()"
+                [disabled]="actionLoading"
+              >
+                @if (actionLoading) {
+                  Processing...
+                } @else {
+                  ↻ Reopen
+                }
+              </button>
+            }
+
+            @if (!canResolve && !canSendToReview && !canReject && !canReopen) {
+              <p class="no-actions">No actions available for this problem status.</p>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="events-section">
+        <h2>Status History</h2>
+
+        @if (eventsLoading) {
+          <p class="loading-text">Loading events...</p>
+        }
+
+        @if (!eventsLoading && events.length === 0) {
+          <p class="no-events">No status changes yet.</p>
+        }
+
+        @if (!eventsLoading && events.length > 0) {
+          <div class="events-list">
+            @for (event of events; track event.id) {
+              <div class="event-item">
+                <div class="event-status-change">
+                  <span class="old-status" [class]="getStatusClass(event.oldStatus)">
+                    {{ getStatusLabel(event.oldStatus) }}
+                  </span>
+                  <span class="arrow">→</span>
+                  <span class="new-status" [class]="getStatusClass(event.newStatus)">
+                    {{ getStatusLabel(event.newStatus) }}
+                  </span>
+                </div>
+                <div class="event-meta">
+                  <span class="changed-by">by {{ event.changedByRole }}</span>
+                  <span class="changed-at">{{ formatDate(event.changedAt) }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
