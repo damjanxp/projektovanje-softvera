@@ -38,10 +38,26 @@
               <span class="price">{{ formatPrice(tour.price) }}</span>
             </div>
             <div class="tour-keypoints">
-              <span>{{ tour.keyPoints.length }} key points</span>
+                <span>{{ tour.keyPoints.length }} key points</span>
+              </div>
+              <div class="tour-actions">
+                <a [routerLink]="['/tours', tour.id]" class="view-details-btn">View Details</a>
+                @if (isTourist) {
+                  <button 
+                    class="add-to-cart-btn"
+                    (click)="addToCart(tour.id)"
+                    [disabled]="isInCart(tour.id) || addingToCartId === tour.id">
+                    @if (addingToCartId === tour.id) {
+                      Adding...
+                    } @else if (isInCart(tour.id)) {
+                      In Cart
+                    } @else {
+                      Add to Cart
+                    }
+                  </button>
+                }
+              </div>
             </div>
-            <a [routerLink]="['/tours', tour.id]" class="view-details-btn">View Details</a>
-          </div>
         }
       </div>
     }

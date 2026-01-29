@@ -2,8 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TourService } from '../../../core/services';
-import { TourDto, InterestLabels, DifficultyLabels, Interest, Difficulty } from '../../../shared/models';
+import { TourService, CartService, AuthService } from '../../../core/services';
+import { ApiResponse, TourDto, InterestLabels, DifficultyLabels, Interest, Difficulty } from '../../../shared/models';
 
 @Component({
   selector: 'app-public-tours-list',
@@ -14,14 +14,20 @@ import { TourDto, InterestLabels, DifficultyLabels, Interest, Difficulty } from 
 })
 export class PublicToursListComponent implements OnInit {
   private tourService = inject(TourService);
+  private cartService = inject(CartService);
+  private authService = inject(AuthService);
   
   tours: TourDto[] = [];
   loading = false;
   error: string | null = null;
   sortOrder: 'asc' | 'desc' = 'asc';
+  addingToCartId: string | null = null;
 
   ngOnInit(): void {
     this.loadTours();
+    if (this.isTourist) {
+      this.loadCartItems();
+    }
   }
 
   loadTours(): void {
@@ -29,7 +35,7 @@ export class PublicToursListComponent implements OnInit {
     this.error = null;
     
     this.tourService.getPublishedTours(this.sortOrder).subscribe({
-      next: (response) => {
+      next: (response: ApiResponse<TourDto[]>) => {
         this.loading = false;
         if (response.success && response.data) {
           this.tours = response.data;
@@ -37,11 +43,44 @@ export class PublicToursListComponent implements OnInit {
           this.error = response.error?.message || 'Failed to load tours';
         }
       },
-      error: (err) => {
+      error: (err: { error?: { error?: { message?: string } } }) => {
         this.loading = false;
         this.error = err.error?.error?.message || 'An error occurred while loading tours';
       }
     });
+  }
+
+  loadCartItems(): void {
+    this.cartService.getCart().subscribe();
+  }
+
+  addToCart(tourId: string): void {
+    this.addingToCartId = tourId;
+    
+    this.cartService.addToCart(tourId).subscribe({
+      next: (response: ApiResponse<void>) => {
+        this.addingToCartId = null;
+        if (!response.success) {
+          this.error = response.error?.message || 'Failed to add to cart';
+        }
+      },
+      error: (err: { error?: { error?: { message?: string } } }) => {
+        this.addingToCartId = null;
+        this.error = err.error?.error?.message || 'An error occurred while adding to cart';
+      }
+    });
+  }
+
+  isInCart(tourId: string): boolean {
+    return this.cartService.isInCartSync(tourId);
+  }
+
+  get isTourist(): boolean {
+    return this.authService.getUserRole() === 'Tourist';
+  }
+
+  get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
   }
 
   onSortChange(): void {

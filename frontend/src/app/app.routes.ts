@@ -11,6 +11,7 @@ import { TourDetailsComponent } from './features/tours/tour-details/tour-details
 import { MyToursComponent } from './features/tours/my-tours/my-tours.component';
 import { CreateTourComponent } from './features/tours/create-tour/create-tour.component';
 import { ManageTourComponent } from './features/tours/manage-tour/manage-tour.component';
+import { CartComponent } from './features/cart/cart.component';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 
@@ -27,6 +28,12 @@ export const routes: Routes = [
   { 
     path: 'tourist-area', 
     component: TouristAreaComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['Tourist'] }
+  },
+  { 
+    path: 'cart', 
+    component: CartComponent,
     canActivate: [authGuard, roleGuard],
     data: { roles: ['Tourist'] }
   },

@@ -152,3 +152,30 @@
 .view-details-btn:hover {
   background-color: #2070e0;
 }
+
+.tour-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.add-to-cart-btn {
+  display: inline-block;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  text-align: center;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-to-cart-btn:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.add-to-cart-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
