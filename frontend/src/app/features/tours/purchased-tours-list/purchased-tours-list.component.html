@@ -1,0 +1,82 @@
+<div class="purchased-tours-container">
+  <a routerLink="/tourist-area" class="back-link">← Back to Tourist Area</a>
+
+  <div class="page-header">
+    <h1>🎫 My Purchased Tours</h1>
+    <p class="subtitle">Rate your experiences and report any issues</p>
+  </div>
+
+  @if (loading) {
+    <div class="loading">Loading your purchased tours...</div>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (!loading && !error && purchasedTours.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">🎒</div>
+      <h2>No Purchased Tours Yet</h2>
+      <p>You haven't purchased any tours yet. Browse our available tours and start your adventure!</p>
+      <a routerLink="/tours" class="browse-btn">Browse Tours</a>
+    </div>
+  }
+
+  @if (!loading && !error && purchasedTours.length > 0) {
+    <div class="tours-grid">
+      @for (item of purchasedTours; track item.tour.id) {
+        <div class="tour-card">
+          <div class="tour-header">
+            <h3>{{ item.tour.name }}</h3>
+            <div class="tour-badges">
+              <span class="category-badge">{{ getCategoryLabel(item.tour.category) }}</span>
+              <span class="difficulty-badge" [class]="'difficulty-' + item.tour.difficulty">
+                {{ getDifficultyLabel(item.tour.difficulty) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="tour-info">
+            <p class="tour-description">{{ item.tour.description }}</p>
+            <div class="tour-meta">
+              <div class="meta-row">
+                <span class="meta-label">Tour Date:</span>
+                <span class="meta-value">{{ formatDate(item.tour.startDate) }}</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">Purchased:</span>
+                <span class="meta-value">{{ formatDate(item.purchasedAt) }}</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">Price Paid:</span>
+                <span class="meta-value price">{{ formatPrice(item.priceAtPurchase) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tour-actions">
+            <a 
+              [routerLink]="['/tourist/ratings/new']" 
+              [queryParams]="{tourId: item.tour.id}" 
+              class="action-btn rate-btn"
+            >
+              ⭐ Rate Tour
+            </a>
+            <a 
+              [routerLink]="['/tourist/problems/new']" 
+              [queryParams]="{tourId: item.tour.id}" 
+              class="action-btn problem-btn"
+            >
+              🚨 Report Problem
+            </a>
+          </div>
+
+          <a [routerLink]="['/tours', item.tour.id]" class="view-details-link">
+            View Full Details →
+          </a>
+        </div>
+      }
+    </div>
+  }
+</div>

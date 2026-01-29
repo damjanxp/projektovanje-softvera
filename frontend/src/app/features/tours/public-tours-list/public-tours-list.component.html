@@ -27,23 +27,30 @@
       <div class="tours-grid">
         @for (tour of tours; track tour.id) {
           <div class="tour-card">
-          <div class="tour-card-header">
-            <h2>{{ tour.name }}</h2>
-            <div class="tour-badges">
-              <span class="category-badge">{{ getCategoryLabel(tour.category) }}</span>
-              <app-status-badge 
-                [status]="tour.status" 
-                [needsReplacement]="tour.needsReplacement || false">
-              </app-status-badge>
+            <div class="tour-card-header">
+              <h2>{{ tour.name }}</h2>
+              <div class="tour-badges">
+                <span class="category-badge">{{ getCategoryLabel(tour.category) }}</span>
+                <app-status-badge 
+                  [status]="tour.status" 
+                  [needsReplacement]="tour.needsReplacement || false">
+                </app-status-badge>
+              </div>
             </div>
-          </div>
-          <p class="tour-description">{{ tour.description }}</p>
-          <div class="tour-meta">
-            <span class="difficulty">{{ getDifficultyLabel(tour.difficulty) }}</span>
-            <span class="date">{{ formatDate(tour.startDate) }}</span>
-            <span class="price">{{ formatPrice(tour.price) }}</span>
-          </div>
-          <div class="tour-keypoints">
+            <p class="tour-description">{{ tour.description }}</p>
+            <div class="tour-meta">
+              <span class="difficulty">{{ getDifficultyLabel(tour.difficulty) }}</span>
+              <span class="date">{{ formatDate(tour.startDate) }}</span>
+              <span class="price">{{ formatPrice(tour.price) }}</span>
+            </div>
+            <div class="tour-rating">
+              @if (tour.averageRating !== null && tour.averageRating !== undefined) {
+                <span class="rating-display">⭐ {{ tour.averageRating.toFixed(1) }}/5</span>
+              } @else {
+                <span class="no-rating">No ratings yet</span>
+              }
+            </div>
+            <div class="tour-keypoints">
               <span>{{ tour.keyPoints.length }} key points</span>
             </div>
             <div class="tour-actions">

@@ -2,9 +2,15 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TourService, CartService, AuthService } from '../../../core/services';
+import { forkJoin, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { TourService, CartService, AuthService, RatingService } from '../../../core/services';
 import { ApiResponse, TourDto, InterestLabels, DifficultyLabels, Interest, Difficulty, TourStatus } from '../../../shared/models';
 import { StatusBadgeComponent } from '../../../shared/components';
+
+interface TourWithRating extends TourDto {
+  averageRating?: number | null;
+}
 
 @Component({
   selector: 'app-public-tours-list',
@@ -14,15 +20,16 @@ import { StatusBadgeComponent } from '../../../shared/components';
   styleUrl: './public-tours-list.component.css'
 })
 export class PublicToursListComponent implements OnInit {
-  private tourService = inject(TourService);
-  private cartService = inject(CartService);
-  private authService = inject(AuthService);
+private tourService = inject(TourService);
+private cartService = inject(CartService);
+private authService = inject(AuthService);
+private ratingService = inject(RatingService);
   
-  tours: TourDto[] = [];
-  loading = false;
-  error: string | null = null;
-  sortOrder: 'asc' | 'desc' = 'asc';
-  addingToCartId: string | null = null;
+tours: TourWithRating[] = [];
+loading = false;
+error: string | null = null;
+sortOrder: 'asc' | 'desc' = 'asc';
+addingToCartId: string | null = null;
 
   ngOnInit(): void {
     this.loadTours();
@@ -37,10 +44,32 @@ export class PublicToursListComponent implements OnInit {
     
     this.tourService.getPublishedTours(this.sortOrder).subscribe({
       next: (response: ApiResponse<TourDto[]>) => {
-        this.loading = false;
         if (response.success && response.data) {
-          this.tours = response.data;
+          const tours = response.data;
+          
+          // Fetch ratings for all tours
+          const ratingObservables = tours.map(tour =>
+            this.ratingService.getAverageRatingForTour(tour.id).pipe(
+              map(ratingResponse => ({
+                ...tour,
+                averageRating: ratingResponse.success ? (ratingResponse.data ?? null) : null
+              })),
+              catchError(() => of({ ...tour, averageRating: null }))
+            )
+          );
+
+          forkJoin(ratingObservables).subscribe({
+            next: (toursWithRatings) => {
+              this.loading = false;
+              this.tours = toursWithRatings;
+            },
+            error: () => {
+              this.loading = false;
+              this.tours = tours.map(tour => ({ ...tour, averageRating: null }));
+            }
+          });
         } else {
+          this.loading = false;
           this.error = response.error?.message || 'Failed to load tours';
         }
       },

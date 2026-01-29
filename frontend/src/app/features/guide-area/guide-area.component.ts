@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
-  selector: 'app-guide-area',
-  standalone: true,
-  imports: [CommonModule],
+selector: 'app-guide-area',
+standalone: true,
+imports: [CommonModule, RouterLink],
   template: `
     <div class="protected-area guide">
       <div class="area-content">
@@ -13,18 +14,22 @@ import { AuthService } from '../../core/services/auth.service';
         <p>Welcome, {{ username }}!</p>
         <p class="description">This is a protected area for guides only.</p>
         <div class="features">
-          <div class="feature-item">
-            <h3>My Tours</h3>
+          <a routerLink="/guide/tours" class="feature-item">
+            <h3>📚 My Tours</h3>
             <p>Manage your created tours</p>
-          </div>
-          <div class="feature-item">
-            <h3>Create Tour</h3>
+          </a>
+          <a routerLink="/guide/tours/create" class="feature-item">
+            <h3>➕ Create Tour</h3>
             <p>Create new tour experiences</p>
-          </div>
-          <div class="feature-item">
-            <h3>Problems</h3>
+          </a>
+          <a routerLink="/guide/problems" class="feature-item">
+            <h3>🚨 Problems</h3>
             <p>Handle reported problems</p>
-          </div>
+          </a>
+          <a routerLink="/guide/replacements" class="feature-item">
+            <h3>🔄 Replacements</h3>
+            <p>View available replacement tours</p>
+          </a>
         </div>
       </div>
     </div>
@@ -40,7 +45,7 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .area-content {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
       background: white;
       padding: 2rem;
@@ -74,6 +79,18 @@ import { AuthService } from '../../core/services/auth.service';
       padding: 1.5rem;
       border-radius: 8px;
       text-align: center;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .feature-item:hover {
+      background: #e9ecef;
+      border-color: #11998e;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(17, 153, 142, 0.2);
     }
 
     .feature-item h3 {
@@ -83,6 +100,7 @@ import { AuthService } from '../../core/services/auth.service';
 
     .feature-item p {
       font-size: 0.9rem;
+      margin: 0;
     }
   `]
 })

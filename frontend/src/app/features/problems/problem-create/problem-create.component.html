@@ -1,0 +1,72 @@
+<div class="problem-create-container">
+  <a routerLink="/tourist-area" class="back-link">← Back to Tourist Area</a>
+
+  <div class="form-card">
+    <h1>Report a Problem</h1>
+    <p class="subtitle">Let us know about any issues you experienced during your tour.</p>
+
+    @if (!tourId) {
+      <div class="error-message">Tour ID is required to report a problem.</div>
+    } @else {
+      @if (error) {
+        <div class="error-message">{{ error }}</div>
+      }
+
+      <form [formGroup]="problemForm" (ngSubmit)="submitProblem()">
+        <div class="form-group">
+          <label for="title">Problem Title *</label>
+          <input
+            type="text"
+            id="title"
+            formControlName="title"
+            placeholder="Brief description of the problem"
+          >
+          @if (problemForm.get('title')?.touched && problemForm.get('title')?.errors) {
+            <span class="field-error">
+              @if (problemForm.get('title')?.errors?.['required']) {
+                Title is required
+              } @else if (problemForm.get('title')?.errors?.['minlength']) {
+                Title must be at least 5 characters
+              } @else if (problemForm.get('title')?.errors?.['maxlength']) {
+                Title must be less than 200 characters
+              }
+            </span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="6"
+            placeholder="Please provide detailed information about the problem..."
+          ></textarea>
+          @if (problemForm.get('description')?.touched && problemForm.get('description')?.errors) {
+            <span class="field-error">
+              @if (problemForm.get('description')?.errors?.['required']) {
+                Description is required
+              } @else if (problemForm.get('description')?.errors?.['minlength']) {
+                Description must be at least 20 characters
+              } @else if (problemForm.get('description')?.errors?.['maxlength']) {
+                Description must be less than 2000 characters
+              }
+            </span>
+          }
+        </div>
+
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="loading"
+        >
+          @if (loading) {
+            Submitting...
+          } @else {
+            Submit Problem Report
+          }
+        </button>
+      </form>
+    }
+  </div>
+</div>

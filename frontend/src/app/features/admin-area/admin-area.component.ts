@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
-  selector: 'app-admin-area',
-  standalone: true,
-  imports: [CommonModule],
+selector: 'app-admin-area',
+standalone: true,
+imports: [CommonModule, RouterLink],
   template: `
     <div class="protected-area admin">
       <div class="area-content">
@@ -13,21 +14,21 @@ import { AuthService } from '../../core/services/auth.service';
         <p>Welcome, {{ username }}!</p>
         <p class="description">This is a protected area for administrators only.</p>
         <div class="features">
-          <div class="feature-item">
-            <h3>User Management</h3>
-            <p>Manage system users</p>
-          </div>
-          <div class="feature-item">
-            <h3>Blocked Users</h3>
+          <a routerLink="/admin/blocked-users" class="feature-item">
+            <h3>🔒 Blocked Users</h3>
             <p>View and unblock users</p>
-          </div>
-          <div class="feature-item">
-            <h3>Problem Review</h3>
+          </a>
+          <a routerLink="/admin/problems-review" class="feature-item">
+            <h3>📋 Problem Review</h3>
             <p>Review escalated problems</p>
+          </a>
+          <div class="feature-item disabled">
+            <h3>👥 User Management</h3>
+            <p>Coming soon</p>
           </div>
-          <div class="feature-item">
-            <h3>System Stats</h3>
-            <p>View system statistics</p>
+          <div class="feature-item disabled">
+            <h3>📊 System Stats</h3>
+            <p>Coming soon</p>
           </div>
         </div>
       </div>
@@ -78,6 +79,24 @@ import { AuthService } from '../../core/services/auth.service';
       padding: 1.5rem;
       border-radius: 8px;
       text-align: center;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .feature-item:not(.disabled):hover {
+      background: #e9ecef;
+      border-color: #fc4a1a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(252, 74, 26, 0.2);
+    }
+
+    .feature-item.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      border: 2px dashed #dee2e6;
     }
 
     .feature-item h3 {
@@ -85,8 +104,13 @@ import { AuthService } from '../../core/services/auth.service';
       margin-bottom: 0.5rem;
     }
 
+    .feature-item.disabled h3 {
+      color: #6c757d;
+    }
+
     .feature-item p {
       font-size: 0.9rem;
+      margin: 0;
     }
   `]
 })

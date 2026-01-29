@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ApiResponse, PurchaseRequest, PurchaseResponse, BonusPointsDto } from '../../shared/models';
+import { ApiResponse, PurchaseRequest, PurchaseResponse, BonusPointsDto, PurchaseResultDto } from '../../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,10 @@ export class PurchaseService {
       `${this.baseUrl}/purchase/confirm?useBonus=${useBonus}`, 
       {}
     );
+  }
+
+  getMyPurchases(): Observable<ApiResponse<PurchaseResultDto[]>> {
+    return this.http.get<ApiResponse<PurchaseResultDto[]>>(`${this.baseUrl}/purchase/my`);
   }
 
   getBonusPoints(): Observable<ApiResponse<BonusPointsDto>> {

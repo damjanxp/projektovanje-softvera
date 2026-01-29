@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { TourService, CartService, AuthService } from '../../../core/services';
+import { TourService, CartService, AuthService, RatingService } from '../../../core/services';
 import { ApiResponse, TourDto, InterestLabels, DifficultyLabels, TourStatusLabels, Interest, Difficulty, TourStatus } from '../../../shared/models';
+import { RatingDto } from '../../../shared/models/rating.model';
 import { LeafletMapComponent, StatusBadgeComponent } from '../../../shared/components';
 
 @Component({
@@ -13,20 +14,28 @@ import { LeafletMapComponent, StatusBadgeComponent } from '../../../shared/compo
   styleUrl: './tour-details.component.css'
 })
 export class TourDetailsComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private tourService = inject(TourService);
-  private cartService = inject(CartService);
-  private authService = inject(AuthService);
+private route = inject(ActivatedRoute);
+private tourService = inject(TourService);
+private cartService = inject(CartService);
+private authService = inject(AuthService);
+private ratingService = inject(RatingService);
   
-  tour: TourDto | null = null;
-  loading = false;
-  error: string | null = null;
-  addingToCart = false;
+tour: TourDto | null = null;
+ratings: RatingDto[] = [];
+averageRating: number | null = null;
+loading = false;
+loadingRatings = false;
+error: string | null = null;
+addingToCart = false;
+
+// Expose Math to template
+Math = Math;
 
   ngOnInit(): void {
     const tourId = this.route.snapshot.paramMap.get('id');
     if (tourId) {
       this.loadTour(tourId);
+      this.loadRatings(tourId);
       if (this.isTourist) {
         this.loadCartItems();
       }
@@ -54,6 +63,35 @@ export class TourDetailsComponent implements OnInit {
       }
     });
   }
+
+  loadRatings(tourId: string): void {
+    this.loadingRatings = true;
+
+    // Load ratings list
+    this.ratingService.getRatingsForTour(tourId).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.ratings = response.data;
+        }
+      },
+      error: () => {
+        // Silently fail - ratings are optional
+      }
+    });
+
+    // Load average rating
+      this.ratingService.getAverageRatingForTour(tourId).subscribe({
+        next: (response) => {
+          this.loadingRatings = false;
+          if (response.success) {
+            this.averageRating = response.data ?? null;
+          }
+        },
+        error: () => {
+          this.loadingRatings = false;
+        }
+      });
+    }
 
   loadCartItems(): void {
     this.cartService.getCart().subscribe();
@@ -125,6 +163,18 @@ export class TourDetailsComponent implements OnInit {
     }
 
     get canAddToCart(): boolean {
-      return this.isTourist && !this.isCanceled && !this.isInCart;
+        return this.isTourist && !this.isCanceled && !this.isInCart;
+      }
+
+      getStarArray(rating: number): boolean[] {
+        return Array(5).fill(false).map((_, index) => index < rating);
+      }
+
+      formatRatingDate(dateString: string): string {
+        return new Date(dateString).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+      }
     }
-  }

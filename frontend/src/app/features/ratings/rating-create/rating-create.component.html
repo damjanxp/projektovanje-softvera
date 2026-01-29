@@ -1,0 +1,70 @@
+<div class="rating-create-container">
+  <a routerLink="/tourist-area" class="back-link">← Back to Tourist Area</a>
+
+  <div class="form-card">
+    <h1>Rate Your Tour Experience</h1>
+
+    @if (!tourId) {
+      <div class="error-message">Tour ID is required to submit a rating.</div>
+    } @else {
+      @if (success) {
+        <div class="success-message">{{ success }}</div>
+      }
+
+      @if (error) {
+        <div class="error-message">{{ error }}</div>
+      }
+
+      <form [formGroup]="ratingForm" (ngSubmit)="submitRating()">
+        <div class="form-group">
+          <label>Your Rating</label>
+          <div class="score-selector">
+            @for (score of [1, 2, 3, 4, 5]; track score) {
+              <button
+                type="button"
+                class="score-btn"
+                [class.selected]="scoreValue === score"
+                [class.low-score]="score <= 2"
+                (click)="ratingForm.get('score')?.setValue(score)"
+              >
+                {{ score }}
+              </button>
+            }
+          </div>
+          <p class="score-label">{{ getScoreLabel(scoreValue) }}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="comment">
+            Comment
+            @if (isCommentRequired) {
+              <span class="required-indicator">* (Required for ratings 1-2)</span>
+            }
+          </label>
+          <textarea
+            id="comment"
+            formControlName="comment"
+            rows="4"
+            placeholder="Share your experience..."
+            [class.invalid]="ratingForm.hasError('commentRequired') && ratingForm.touched"
+          ></textarea>
+          @if (ratingForm.hasError('commentRequired') && ratingForm.touched) {
+            <span class="field-error">A comment is required for low ratings (1-2 stars)</span>
+          }
+        </div>
+
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="loading"
+        >
+          @if (loading) {
+            Submitting...
+          } @else {
+            Submit Rating
+          }
+        </button>
+      </form>
+    }
+  </div>
+</div>

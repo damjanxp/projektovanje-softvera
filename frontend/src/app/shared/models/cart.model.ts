@@ -19,6 +19,23 @@ export interface PurchaseResponse {
   usedBonusPoints: number;
 }
 
+export interface PurchasedTourDto {
+  tourId: string;
+  tourName: string;
+  priceAtPurchase: number;
+}
+
+export interface PurchaseResultDto {
+  purchaseId: string;
+  originalPrice: number;
+  finalPrice: number;
+  bonusPointsUsed: number;
+  bonusPointsEarned: number;
+  totalBonusPoints: number;
+  purchasedAt: string;
+  tours: PurchasedTourDto[];
+}
+
 export interface BonusPointsDto {
   points: number;
 }
