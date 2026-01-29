@@ -1,0 +1,105 @@
+<div class="cart-container">
+  <h1>Shopping Cart</h1>
+
+  @if (loading) {
+    <div class="loading">Loading cart...</div>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (successMessage) {
+    <div class="success-message">{{ successMessage }}</div>
+  }
+
+  @if (!loading && !error && !successMessage) {
+    @if (isEmpty) {
+      <div class="empty-cart">
+        <p>Your cart is empty.</p>
+        <a routerLink="/tours" class="browse-tours-btn">Browse Tours</a>
+      </div>
+    } @else {
+      <div class="cart-content">
+        <div class="cart-items">
+          <h2>Cart Items ({{ cart!.items.length }})</h2>
+          
+          @for (item of cart!.items; track item.tourId) {
+            <div class="cart-item" [class.removing]="removingItemId === item.tourId">
+              <div class="item-info">
+                <h3>{{ item.name }}</h3>
+                <p class="item-date">Start Date: {{ formatDate(item.startDate) }}</p>
+              </div>
+              <div class="item-price">
+                {{ formatPrice(item.price) }}
+              </div>
+              <button 
+                class="remove-btn" 
+                (click)="removeItem(item.tourId)"
+                [disabled]="isProcessing">
+                @if (removingItemId === item.tourId) {
+                  Removing...
+                } @else {
+                  Remove
+                }
+              </button>
+            </div>
+          }
+        </div>
+
+        <div class="cart-summary">
+          <h2>Order Summary</h2>
+          
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span>{{ formatPrice(cart!.totalPrice) }}</span>
+          </div>
+
+          <div class="bonus-section">
+            <div class="bonus-info">
+              <span>Available Bonus Points:</span>
+              @if (loadingBonus) {
+                <span>Loading...</span>
+              } @else {
+                <span class="bonus-points">{{ bonusPoints }}</span>
+              }
+            </div>
+            
+            @if (bonusPoints > 0) {
+              <label class="bonus-toggle">
+                <input 
+                  type="checkbox" 
+                  [(ngModel)]="useBonus"
+                  [disabled]="isProcessing">
+                <span>Use bonus points ({{ formatPrice(discountAmount) }} discount)</span>
+              </label>
+            }
+          </div>
+
+          @if (useBonus && discountAmount > 0) {
+            <div class="summary-row discount">
+              <span>Bonus Discount:</span>
+              <span>-{{ formatPrice(discountAmount) }}</span>
+            </div>
+          }
+
+          <div class="summary-row total">
+            <span>Total:</span>
+            <span class="total-price">{{ formatPrice(displayedPrice) }}</span>
+          </div>
+
+          <button 
+            class="confirm-btn"
+            (click)="confirmPurchase()"
+            [disabled]="isProcessing || isEmpty">
+            @if (purchasing) {
+              Processing...
+            } @else {
+              Confirm Purchase
+            }
+          </button>
+        </div>
+      </div>
+    }
+  }
+</div>

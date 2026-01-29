@@ -127,6 +127,10 @@ public static class DatabaseSeeder
 
         context.Tourists.AddRange(tourist1, tourist2, tourist3);
         await context.SaveChangesAsync();
+
+        // Add bonus points to Jane Smith for testing
+        tourist2.AddBonusPoints(20);
+        await context.SaveChangesAsync();
     }
 
     private static async Task SeedToursAsync(TourAppDbContext context)
@@ -315,7 +319,7 @@ public static class DatabaseSeeder
             tourist1Id,
             150.00m,
             0,
-            15 // 10% of price as bonus points
+            15 // 10% of 150 = 15 bonus points
         );
         purchase1.AddPurchasedTour(tour1Id, "Mountain Hiking Adventure", 150.00m);
 
@@ -326,7 +330,7 @@ public static class DatabaseSeeder
             tourist2Id,
             170.00m, // 75 + 95 = 170
             0,
-            17
+            17 // 10% of 170 = 17 bonus points
         );
         purchase2.AddPurchasedTour(tour2Id, "City Art Gallery Tour", 75.00m);
         purchase2.AddPurchasedTour(tour3Id, "Food Market Experience", 95.00m);
@@ -338,7 +342,7 @@ public static class DatabaseSeeder
             tourist1Id,
             85.00m, // Used 10 bonus points (95 - 10)
             10,
-            8
+            9 // 10% of 95 = 9.5 ? 9 bonus points (rounded down)
         );
         purchase3.AddPurchasedTour(tour3Id, "Food Market Experience", 95.00m);
 
@@ -349,7 +353,7 @@ public static class DatabaseSeeder
             tourist1Id,
             60.00m,
             0,
-            6
+            6 // 10% of 60 = 6 bonus points
         );
         purchase4.AddPurchasedTour(tour5Id, "Historic City Walk", 60.00m);
 
@@ -360,7 +364,7 @@ public static class DatabaseSeeder
             tourist2Id,
             60.00m,
             0,
-            6
+            6 // 10% of 60 = 6 bonus points
         );
         purchase5.AddPurchasedTour(tour5Id, "Historic City Walk", 60.00m);
 
@@ -371,7 +375,7 @@ public static class DatabaseSeeder
             tourist1Id,
             45.00m,
             0,
-            4
+            4 // 10% of 45 = 4.5 ? 4 bonus points (rounded down)
         );
         purchase6.AddPurchasedTour(tour6Id, "Sunset Beach Walk", 45.00m);
 
@@ -382,7 +386,7 @@ public static class DatabaseSeeder
             tourist2Id,
             120.00m,
             0,
-            12
+            12 // 10% of 120 = 12 bonus points
         );
         purchase7.AddPurchasedTour(tour7Id, "Wine Tasting Tour", 120.00m);
 
@@ -393,7 +397,7 @@ public static class DatabaseSeeder
             tourist3Id,
             120.00m,
             0,
-            12
+            12 // 10% of 120 = 12 bonus points
         );
         purchase8.AddPurchasedTour(tour7Id, "Wine Tasting Tour", 120.00m);
 
@@ -404,7 +408,7 @@ public static class DatabaseSeeder
             tourist1Id,
             180.00m,
             0,
-            18
+            18 // 10% of 180 = 18 bonus points
         );
         purchase9.AddPurchasedTour(tour8Id, "Extreme Sports Day", 180.00m);
 
@@ -415,7 +419,7 @@ public static class DatabaseSeeder
             tourist2Id,
             85.00m,
             0,
-            8
+            8 // 10% of 85 = 8.5 ? 8 bonus points (rounded down)
         );
         purchase10.AddPurchasedTour(tour9Id, "Photography Workshop Tour", 85.00m);
 
@@ -426,7 +430,7 @@ public static class DatabaseSeeder
             tourist3Id,
             45.00m,
             0,
-            4
+            4 // 10% of 45 = 4.5 ? 4 bonus points (rounded down)
         );
         purchase11.AddPurchasedTour(tour6Id, "Sunset Beach Walk", 45.00m);
 

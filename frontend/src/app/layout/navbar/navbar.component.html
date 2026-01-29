@@ -18,14 +18,19 @@
     }
     
     @if (isAuthenticated) {
+    <li class="nav-item">
+      <a [routerLink]="roleAreaLink" routerLinkActive="active" class="nav-link">My Area</a>
+    </li>
+    @if (userRole === 'Tourist') {
       <li class="nav-item">
-        <a [routerLink]="roleAreaLink" routerLinkActive="active" class="nav-link">My Area</a>
+        <a routerLink="/cart" routerLinkActive="active" class="nav-link">Cart</a>
       </li>
-      @if (userRole === 'Guide') {
-        <li class="nav-item">
-          <a routerLink="/guide/tours" routerLinkActive="active" class="nav-link">My Tours</a>
-        </li>
-      }
+    }
+    @if (userRole === 'Guide') {
+      <li class="nav-item">
+        <a routerLink="/guide/tours" routerLinkActive="active" class="nav-link">My Tours</a>
+      </li>
+    }
       <li class="nav-item">
         <span class="nav-user">
           <span class="username">{{ username }}</span>

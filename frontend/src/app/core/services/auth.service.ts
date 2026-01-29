@@ -1,4 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap, catchError, of } from 'rxjs';
@@ -25,6 +26,11 @@ export class AuthService {
   
   private http = inject(HttpClient);
   private router = inject(Router);
+  private platformId = inject(PLATFORM_ID);
+  
+  private get isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
+  }
 
   login(username: string, password: string): Observable<ApiResponse<AuthResponse>> {
     return this.http.post<ApiResponse<AuthResponse>>(`${environment.apiUrl}/auth/login`, {
@@ -54,12 +60,17 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.USER_KEY);
+    if (this.isBrowser) {
+      localStorage.removeItem(this.TOKEN_KEY);
+      localStorage.removeItem(this.USER_KEY);
+    }
     this.router.navigate(['/login']);
   }
 
   getToken(): string | null {
+    if (!this.isBrowser) {
+      return null;
+    }
     return localStorage.getItem(this.TOKEN_KEY);
   }
 
@@ -173,14 +184,21 @@ export class AuthService {
   }
 
   private setToken(token: string): void {
-    localStorage.setItem(this.TOKEN_KEY, token);
+    if (this.isBrowser) {
+      localStorage.setItem(this.TOKEN_KEY, token);
+    }
   }
 
   private setUser(user: AuthResponse): void {
-    localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    if (this.isBrowser) {
+      localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    }
   }
 
   private getUser(): AuthResponse | null {
+    if (!this.isBrowser) {
+      return null;
+    }
     const userJson = localStorage.getItem(this.USER_KEY);
     if (!userJson) {
       return null;

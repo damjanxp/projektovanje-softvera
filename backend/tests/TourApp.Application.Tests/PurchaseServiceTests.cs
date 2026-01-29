@@ -146,7 +146,7 @@ public class PurchaseServiceTests : IDisposable
 
         // Refresh tourist from database
         var updatedTourist = await _dbContext.Tourists.FirstAsync(t => t.Id == _touristId);
-        // 150 - 100 (used) + 10 (earned per purchase) = 60
+        // 150 - 100 (used) + 10 (earned: 10% of $100) = 60
         updatedTourist.BonusPoints.Should().Be(60);
     }
 
@@ -171,7 +171,7 @@ public class PurchaseServiceTests : IDisposable
         result.Data!.BonusPointsUsed.Should().Be(0);
         result.Data.FinalPrice.Should().Be(100.00m);
 
-        // Refresh tourist - should still have 100 + 10 earned = 110
+        // Refresh tourist - should still have 100 + 10 earned (10% of $100) = 110
         var updatedTourist = await _dbContext.Tourists.FirstAsync(t => t.Id == _touristId);
         updatedTourist.BonusPoints.Should().Be(110);
     }

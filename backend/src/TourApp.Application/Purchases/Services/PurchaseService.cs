@@ -16,7 +16,7 @@ public class PurchaseService : IPurchaseService
     private readonly IEmailService _emailService;
     private readonly DbContext _dbContext;
 
-    private const int BonusPointsPerPurchase = 10;
+    private const decimal BonusPointsPercentage = 0.10m; // 10% od cene ture
 
     public PurchaseService(
         IPurchaseRepository purchaseRepository,
@@ -73,7 +73,8 @@ public class PurchaseService : IPurchaseService
             tourist.SpendBonusPoints(bonusPointsUsed);
         }
 
-        var bonusPointsEarned = BonusPointsPerPurchase;
+        // Bonus poeni = 10% od originalne cene (pre primene bonus poena)
+        var bonusPointsEarned = (int)Math.Floor(originalPrice * BonusPointsPercentage);
         tourist.AddBonusPoints(bonusPointsEarned);
 
         var purchase = new Purchase(

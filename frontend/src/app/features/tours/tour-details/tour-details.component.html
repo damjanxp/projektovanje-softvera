@@ -36,11 +36,28 @@
               <span class="meta-value price">{{ formatPrice(tour.price) }}</span>
             </div>
             <div class="meta-item">
-              <span class="meta-label">Key Points</span>
-              <span class="meta-value">{{ tour.keyPoints.length }}</span>
+                  <span class="meta-label">Key Points</span>
+                  <span class="meta-value">{{ tour.keyPoints.length }}</span>
+                </div>
+              </div>
+
+              @if (isTourist) {
+                <div class="tour-cart-action">
+                  <button 
+                    class="add-to-cart-btn"
+                    (click)="addToCart()"
+                    [disabled]="isInCart || addingToCart">
+                    @if (addingToCart) {
+                      Adding to Cart...
+                    } @else if (isInCart) {
+                      Already in Cart
+                    } @else {
+                      Add to Cart
+                    }
+                  </button>
+                </div>
+              }
             </div>
-          </div>
-        </div>
 
         <div class="tour-keypoints-section">
           <h2>Key Points</h2>
