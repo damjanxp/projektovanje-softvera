@@ -18,6 +18,10 @@
           <span class="difficulty-badge" [class]="'difficulty-' + tour.difficulty">
             {{ getDifficultyLabel(tour.difficulty) }}
           </span>
+          <app-status-badge 
+            [status]="tour.status" 
+            [needsReplacement]="tour.needsReplacement || false">
+          </app-status-badge>
         </div>
       </div>
 
@@ -43,18 +47,22 @@
 
               @if (isTourist) {
                 <div class="tour-cart-action">
-                  <button 
-                    class="add-to-cart-btn"
-                    (click)="addToCart()"
-                    [disabled]="isInCart || addingToCart">
-                    @if (addingToCart) {
-                      Adding to Cart...
-                    } @else if (isInCart) {
-                      Already in Cart
-                    } @else {
-                      Add to Cart
-                    }
-                  </button>
+                  @if (isCanceled) {
+                    <p class="canceled-notice">This tour has been canceled and cannot be purchased.</p>
+                  } @else {
+                    <button 
+                      class="add-to-cart-btn"
+                      (click)="addToCart()"
+                      [disabled]="isInCart || addingToCart">
+                      @if (addingToCart) {
+                        Adding to Cart...
+                      } @else if (isInCart) {
+                        Already in Cart
+                      } @else {
+                        Add to Cart
+                      }
+                    </button>
+                  }
                 </div>
               }
             </div>

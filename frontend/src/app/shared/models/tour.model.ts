@@ -39,6 +39,8 @@ export interface TourDto {
   startDate: string;
   status: TourStatus;
   keyPoints: KeyPointDto[];
+  needsReplacement?: boolean;
+  replacementRequestedAt?: string;
 }
 
 export interface CreateTourRequest {

@@ -151,6 +151,8 @@ public class TourService : ITourService
             Price = tour.Price,
             StartDate = tour.StartDate,
             Status = tour.Status,
+            NeedsReplacement = tour.NeedsReplacement,
+            ReplacementRequestedAt = tour.ReplacementRequestedAt,
             KeyPoints = tour.KeyPoints.Select(MapKeyPointToDto).ToList()
         };
     }

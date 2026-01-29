@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TourService, CartService, AuthService } from '../../../core/services';
 import { ApiResponse, TourDto, InterestLabels, DifficultyLabels, TourStatusLabels, Interest, Difficulty, TourStatus } from '../../../shared/models';
-import { LeafletMapComponent } from '../../../shared/components';
+import { LeafletMapComponent, StatusBadgeComponent } from '../../../shared/components';
 
 @Component({
   selector: 'app-tour-details',
   standalone: true,
-  imports: [CommonModule, RouterLink, LeafletMapComponent],
+  imports: [CommonModule, RouterLink, LeafletMapComponent, StatusBadgeComponent],
   templateUrl: './tour-details.component.html',
   styleUrl: './tour-details.component.css'
 })
@@ -116,7 +116,15 @@ export class TourDetailsComponent implements OnInit {
   }
 
   get sortedKeyPoints() {
-    if (!this.tour) return [];
-    return [...this.tour.keyPoints].sort((a, b) => a.order - b.order);
+      if (!this.tour) return [];
+      return [...this.tour.keyPoints].sort((a, b) => a.order - b.order);
+    }
+
+    get isCanceled(): boolean {
+      return this.tour?.status === TourStatus.Canceled;
+    }
+
+    get canAddToCart(): boolean {
+      return this.isTourist && !this.isCanceled && !this.isInCart;
+    }
   }
-}

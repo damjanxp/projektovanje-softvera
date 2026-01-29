@@ -12,6 +12,7 @@ import { MyToursComponent } from './features/tours/my-tours/my-tours.component';
 import { CreateTourComponent } from './features/tours/create-tour/create-tour.component';
 import { ManageTourComponent } from './features/tours/manage-tour/manage-tour.component';
 import { CartComponent } from './features/cart/cart.component';
+import { ReplacementBoardComponent } from './features/replacements/replacement-board/replacement-board.component';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 
@@ -60,6 +61,12 @@ export const routes: Routes = [
   { 
     path: 'guide/tours/:id', 
     component: ManageTourComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['Guide'] }
+  },
+  { 
+    path: 'guide/replacements', 
+    component: ReplacementBoardComponent,
     canActivate: [authGuard, roleGuard],
     data: { roles: ['Guide'] }
   },
