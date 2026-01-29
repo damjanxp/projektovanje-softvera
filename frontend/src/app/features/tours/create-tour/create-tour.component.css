@@ -1,50 +1,56 @@
+/* ============ CREATE TOUR ============ */
 .create-tour-container {
   max-width: 700px;
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--spacing-xl) var(--spacing-lg);
 }
 
 .back-link {
-  display: inline-block;
-  color: #3388ff;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-primary-dark);
   text-decoration: none;
-  margin-bottom: 20px;
-  font-size: 14px;
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  transition: color var(--transition-fast);
 }
 
 .back-link:hover {
-  text-decoration: underline;
+  color: var(--color-primary);
 }
 
 .form-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  padding: 32px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-xl);
 }
 
 .form-card h1 {
-  margin: 0 0 24px 0;
-  color: #333;
-  font-size: 24px;
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xl);
 }
 
 .error-message {
-  background-color: #fee;
-  color: #c00;
-  padding: 12px 16px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  background: rgba(199, 123, 123, 0.15);
+  color: #8a4a4a;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid var(--color-danger);
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-lg);
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  color: #333;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
   font-weight: 500;
 }
 
@@ -52,30 +58,32 @@
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: border-color 0.2s;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
   box-sizing: border-box;
+  background: white;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #3388ff;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(216, 167, 177, 0.2);
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 120px;
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: var(--spacing-lg);
 }
 
 @media (max-width: 600px) {
@@ -86,52 +94,54 @@
 
 .field-error {
   display: block;
-  margin-top: 6px;
-  color: #e74c3c;
-  font-size: 13px;
+  margin-top: var(--spacing-xs);
+  color: #8a4a4a;
+  font-size: var(--font-size-sm);
 }
 
 .form-actions {
   display: flex;
-  gap: 16px;
-  margin-top: 32px;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
 }
 
 .cancel-btn {
   flex: 1;
-  padding: 14px 24px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
   background: white;
-  color: #666;
+  color: var(--color-text-secondary);
   text-decoration: none;
   text-align: center;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  font-weight: 600;
+  transition: all var(--transition-fast);
 }
 
 .cancel-btn:hover {
-  background-color: #f8f9fa;
+  background: var(--color-bg-card);
+  border-color: var(--color-primary);
 }
 
 .submit-btn {
   flex: 1;
-  padding: 14px 24px;
+  padding: 1rem 1.5rem;
   border: none;
-  border-radius: 6px;
-  background-color: #3388ff;
-  color: white;
-  font-size: 16px;
-  font-weight: 500;
+  border-radius: var(--radius-pill);
+  background: var(--color-secondary);
+  color: var(--color-text-light);
+  font-size: var(--font-size-md);
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .submit-btn:hover:not(:disabled) {
-  background-color: #2070e0;
+  background: var(--color-secondary-dark);
+  transform: translateY(-2px);
 }
 
 .submit-btn:disabled {
-  background-color: #ccc;
+  background: var(--color-border);
   cursor: not-allowed;
 }

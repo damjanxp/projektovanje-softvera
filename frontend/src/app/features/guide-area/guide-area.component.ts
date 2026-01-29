@@ -37,31 +37,33 @@ imports: [CommonModule, RouterLink],
   styles: [`
     .protected-area {
       padding: 2rem;
-      min-height: calc(100vh - 80px);
+      min-height: calc(100vh - 60px);
     }
 
     .guide {
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      background: var(--color-bg-main);
     }
 
     .area-content {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      background: var(--color-bg-card);
+      padding: 2.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
     }
 
     h1 {
       text-align: center;
-      color: #333;
+      color: var(--color-text-primary);
       margin-bottom: 0.5rem;
+      font-size: 2rem;
     }
 
     p {
       text-align: center;
-      color: #666;
+      color: var(--color-text-secondary);
     }
 
     .description {
@@ -71,31 +73,32 @@ imports: [CommonModule, RouterLink],
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
+      gap: 1.25rem;
     }
 
     .feature-item {
-      background: #f8f9fa;
-      padding: 1.5rem;
-      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1.75rem;
+      border-radius: var(--radius-md);
       text-align: center;
       text-decoration: none;
       color: inherit;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
       cursor: pointer;
       border: 2px solid transparent;
     }
 
     .feature-item:hover {
-      background: #e9ecef;
-      border-color: #11998e;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(17, 153, 142, 0.2);
+      background: rgba(255, 255, 255, 0.9);
+      border-color: var(--color-secondary);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(163, 177, 138, 0.25);
     }
 
     .feature-item h3 {
-      color: #11998e;
+      color: var(--color-secondary-dark);
       margin-bottom: 0.5rem;
+      font-size: 1.1rem;
     }
 
     .feature-item p {

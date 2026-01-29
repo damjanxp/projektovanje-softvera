@@ -44,7 +44,6 @@ export class AuthService {
         }
       }),
       catchError(error => {
-        console.error('Login error:', error);
         const errorMessage = error.error?.error?.message 
           || error.error?.message 
           || 'An error occurred during login';
@@ -177,8 +176,7 @@ export class AuthService {
       );
 
       return JSON.parse(jsonPayload);
-    } catch (error) {
-      console.error('Error decoding JWT:', error);
+    } catch {
       return null;
     }
   }

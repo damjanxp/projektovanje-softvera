@@ -68,67 +68,71 @@ import { AuthService } from '../../core/services/auth.service';
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: calc(100vh - 80px);
+      min-height: calc(100vh - 60px);
       padding: 2rem;
-      background-color: #f5f5f5;
+      background: var(--color-bg-main);
     }
 
     .login-card {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background: var(--color-bg-card);
+      padding: 2.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
     }
 
     h2 {
       text-align: center;
       margin-bottom: 1.5rem;
-      color: #333;
+      color: var(--color-text-primary);
+      font-size: 1.5rem;
     }
 
     .error-message {
-      background-color: #f8d7da;
-      color: #721c24;
-      padding: 0.75rem 1rem;
-      border-radius: 4px;
+      background: rgba(199, 123, 123, 0.15);
+      color: #8a4a4a;
+      padding: 0.875rem 1rem;
+      border-radius: var(--radius-sm);
       margin-bottom: 1rem;
-      border: 1px solid #f5c6cb;
+      border: 1px solid var(--color-danger);
     }
 
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
 
     label {
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 500;
-      color: #333;
+      color: var(--color-text-primary);
     }
 
     input {
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      padding: 0.875rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
       font-size: 1rem;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
       box-sizing: border-box;
+      background: white;
     }
 
     input:focus {
       outline: none;
-      border-color: #007bff;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(216, 167, 177, 0.2);
     }
 
     input.invalid {
-      border-color: #dc3545;
+      border-color: var(--color-danger);
     }
 
     .field-error {
-      color: #dc3545;
+      color: #8a4a4a;
       font-size: 0.875rem;
       margin-top: 0.25rem;
       display: block;
@@ -136,23 +140,25 @@ import { AuthService } from '../../core/services/auth.service';
 
     .login-button {
       width: 100%;
-      padding: 0.75rem;
-      background-color: #007bff;
-      color: white;
+      padding: 1rem;
+      background: var(--color-secondary);
+      color: var(--color-text-light);
       border: none;
-      border-radius: 4px;
+      border-radius: var(--radius-pill);
       font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.2s;
-      margin-top: 1rem;
+      transition: all 0.2s;
+      margin-top: 0.5rem;
     }
 
     .login-button:hover:not(:disabled) {
-      background-color: #0056b3;
+      background: var(--color-secondary-dark);
+      transform: translateY(-2px);
     }
 
     .login-button:disabled {
-      background-color: #ccc;
+      background: var(--color-border);
       cursor: not-allowed;
     }
 
@@ -162,11 +168,13 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .login-footer a {
-      color: #007bff;
+      color: var(--color-primary-dark);
       text-decoration: none;
+      transition: color 0.2s;
     }
 
     .login-footer a:hover {
+      color: var(--color-primary);
       text-decoration: underline;
     }
   `]

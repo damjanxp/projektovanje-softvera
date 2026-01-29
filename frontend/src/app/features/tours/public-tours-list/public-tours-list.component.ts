@@ -134,10 +134,14 @@ addingToCartId: string | null = null;
     }
 
     isCanceled(tour: TourDto): boolean {
-      return tour.status === TourStatus.Canceled;
-    }
+        return tour.status === TourStatus.Canceled;
+      }
 
-    canAddToCart(tour: TourDto): boolean {
-      return this.isTourist && !this.isCanceled(tour) && !this.isInCart(tour.id);
+      hasReplacementRequested(tour: TourDto): boolean {
+        return tour.needsReplacement === true;
+      }
+
+      canAddToCart(tour: TourDto): boolean {
+        return this.isTourist && !this.isCanceled(tour) && !this.hasReplacementRequested(tour) && !this.isInCart(tour.id);
+      }
     }
-  }

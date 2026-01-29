@@ -162,8 +162,12 @@ Math = Math;
       return this.tour?.status === TourStatus.Canceled;
     }
 
+    get needsReplacement(): boolean {
+      return this.tour?.needsReplacement === true;
+    }
+
     get canAddToCart(): boolean {
-        return this.isTourist && !this.isCanceled && !this.isInCart;
+        return this.isTourist && !this.isCanceled && !this.needsReplacement && !this.isInCart;
       }
 
       getStarArray(rating: number): boolean[] {

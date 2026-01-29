@@ -1,25 +1,108 @@
-<div class="home-container">
-  <h1>Welcome to TourApp</h1>
-  <p class="subtitle">Discover amazing tours and experiences</p>
-  
-  <div class="features">
-    <div class="feature-card">
-      <h3>🌍 Explore Tours</h3>
-      <p>Browse through a variety of tours created by experienced guides.</p>
+<div class="home-page">
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <h1 class="hero-title">Discover & book things to do</h1>
+        <p class="hero-subtitle">Explore the world's best tours and experiences</p>
+        
+        <!-- Search Bar (Visual Only) -->
+        <div class="search-bar">
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search destinations, tours, activities..."
+            readonly
+          >
+          <button class="search-btn" [routerLink]="['/tours']">
+            Search
+          </button>
+        </div>
+      </div>
     </div>
-    
-    <div class="feature-card">
-      <h3>⭐ Rate & Review</h3>
-      <p>Share your experience by rating tours you've attended.</p>
-    </div>
-    
-    <div class="feature-card">
-      <h3>🎯 Personalized</h3>
-      <p>Get tour recommendations based on your interests.</p>
-    </div>
-  </div>
+  </section>
 
-  <div class="cta-section">
-    <a routerLink="/login" class="cta-button">Get Started</a>
+  <!-- MAIN CONTENT -->
+  <div class="home-container">
+    
+    <!-- DIVIDER -->
+    <div class="section-divider"></div>
+
+    <!-- YOU MIGHT LIKE SECTION -->
+    <section class="tour-section">
+      <h2 class="section-title">You might like</h2>
+      
+      @if (loading) {
+        <div class="loading-text">Loading recommendations...</div>
+      } @else if (youMightLikeTours.length === 0) {
+        <p class="empty-text">No tours available yet. Check back soon!</p>
+      } @else {
+        <div class="tour-cards-grid">
+          @for (tour of youMightLikeTours; track tour.id) {
+            <a [routerLink]="['/tours', tour.id]" class="home-tour-card">
+              <div class="card-image-placeholder">
+                <span class="category-tag">{{ getCategoryLabel(tour.category) }}</span>
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">{{ tour.name }}</h3>
+                <p class="card-description">{{ tour.description }}</p>
+                <div class="card-meta">
+                  <span class="card-rating">{{ formatRating(tour.averageRating) }}</span>
+                  <span class="card-price">From {{ formatPrice(tour.price) }}</span>
+                </div>
+              </div>
+            </a>
+          }
+        </div>
+      }
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="section-divider"></div>
+
+    <!-- TOP RATED SECTION -->
+    <section class="tour-section">
+      <h2 class="section-title">Top rated</h2>
+      
+      @if (loading) {
+        <div class="loading-text">Loading top tours...</div>
+      } @else if (topRatedTours.length === 0) {
+        <p class="empty-text">No rated tours yet.</p>
+      } @else {
+        <div class="tour-cards-grid">
+          @for (tour of topRatedTours; track tour.id) {
+            <a [routerLink]="['/tours', tour.id]" class="home-tour-card">
+              <div class="card-image-placeholder">
+                <span class="category-tag">{{ getCategoryLabel(tour.category) }}</span>
+                @if (tour.averageRating !== null && tour.averageRating !== undefined) {
+                  <span class="top-rated-badge">★ Top Rated</span>
+                }
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">{{ tour.name }}</h3>
+                <p class="card-description">{{ tour.description }}</p>
+                <div class="card-meta">
+                  <span class="card-rating">{{ formatRating(tour.averageRating) }}</span>
+                  <span class="card-price">From {{ formatPrice(tour.price) }}</span>
+                </div>
+              </div>
+            </a>
+          }
+        </div>
+      }
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="section-divider"></div>
+
+    <!-- CTA SECTION -->
+    @if (!isAuthenticated) {
+      <section class="cta-section">
+        <h2>Ready to explore?</h2>
+        <p>Join thousands of travelers discovering amazing experiences</p>
+        <a routerLink="/login" class="cta-button">Get Started</a>
+      </section>
+    }
   </div>
 </div>
+

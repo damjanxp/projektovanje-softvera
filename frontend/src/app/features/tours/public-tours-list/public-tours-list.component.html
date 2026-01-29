@@ -55,22 +55,26 @@
             </div>
             <div class="tour-actions">
               <a [routerLink]="['/tours', tour.id]" class="view-details-btn">View Details</a>
-              @if (isTourist && !isCanceled(tour)) {
+              @if (canAddToCart(tour)) {
                 <button 
                   class="add-to-cart-btn"
                   (click)="addToCart(tour.id)"
-                  [disabled]="isInCart(tour.id) || addingToCartId === tour.id">
+                  [disabled]="addingToCartId === tour.id">
                   @if (addingToCartId === tour.id) {
                     Adding...
-                  } @else if (isInCart(tour.id)) {
-                    In Cart
                   } @else {
                     Add to Cart
                   }
                 </button>
               }
+              @if (isTourist && isInCart(tour.id)) {
+                <span class="in-cart-label">In Cart</span>
+              }
               @if (isCanceled(tour)) {
                 <span class="canceled-label">Canceled</span>
+              }
+              @if (hasReplacementRequested(tour) && !isCanceled(tour)) {
+                <span class="replacement-label">Awaiting Replacement</span>
               }
             </div>
           </div>
