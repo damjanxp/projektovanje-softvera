@@ -51,6 +51,10 @@
                     <p class="canceled-notice">This tour has been canceled and cannot be purchased.</p>
                   } @else if (needsReplacement) {
                     <p class="replacement-notice">This tour is awaiting a replacement guide and cannot be purchased at this time.</p>
+                  } @else if (isAlreadyPurchased) {
+                    <p class="purchased-notice">You have already purchased this tour.</p>
+                  } @else if (isTourPast) {
+                    <p class="past-notice">This tour has already ended and cannot be purchased.</p>
                   } @else {
                     <button 
                       class="add-to-cart-btn"

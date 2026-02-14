@@ -1,30 +1,38 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, AsyncPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService, UserRole } from '../../core/services/auth.service';
+import { BalanceService } from '../../core/services/balance.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, AsyncPipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   private authService = inject(AuthService);
+  balanceService = inject(BalanceService);
 
   // Icon Paths
   readonly PNG_LOGO_PATH = 'assets/logo.png';
   readonly PNG_TOURS_PATH = 'assets/icons/tours.png';
   readonly PNG_CART_PATH = 'assets/icons/cart.png';
   readonly PNG_MYAREA_PATH = 'assets/icons/myarea.png';
+  readonly PNG_MYTOURS_PATH = 'assets/icons/mytours.png';
+  readonly PNG_REPLACEMENTS_PATH = 'assets/icons/replacements.png';
   readonly PNG_LOGOUT_PATH = 'assets/icons/logout.png';
   readonly PNG_LOGIN_PATH = 'assets/icons/login.png';
   
   readonly APP_NAME = 'Explore with Soul';
 
   get isAuthenticated(): boolean {
-    return this.authService.isAuthenticated();
+    const auth = this.authService.isAuthenticated();
+    if (auth && this.isTourist) {
+      this.balanceService.loadBalance();
+    }
+    return auth;
   }
 
   get username(): string | null {

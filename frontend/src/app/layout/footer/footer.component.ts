@@ -96,6 +96,7 @@ import { RouterLink } from '@angular/router';
       font-size: var(--font-size-xl);
       margin: 0 0 var(--spacing-sm) 0;
       color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .brand-tagline {
@@ -103,6 +104,7 @@ import { RouterLink } from '@angular/router';
       color: rgba(255, 255, 255, 0.7);
       margin: 0;
       line-height: 1.6;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .footer-links {
@@ -129,6 +131,7 @@ import { RouterLink } from '@angular/router';
       letter-spacing: 1px;
       margin: 0 0 var(--spacing-md) 0;
       color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .footer-column ul {
@@ -146,6 +149,7 @@ import { RouterLink } from '@angular/router';
       text-decoration: none;
       font-size: var(--font-size-sm);
       transition: color var(--transition-fast);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .footer-column a:hover {
@@ -162,6 +166,7 @@ import { RouterLink } from '@angular/router';
       margin: 0;
       font-size: var(--font-size-sm);
       color: rgba(255, 255, 255, 0.6);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
   `]
 })

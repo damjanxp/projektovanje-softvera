@@ -27,37 +27,52 @@
       <div class="tours-grid">
         @for (tour of tours; track tour.id) {
           <div class="tour-card">
-            <div class="tour-card-header">
-              <h2>{{ tour.name }}</h2>
-              <div class="tour-badges">
+            <!-- Image/Header Section -->
+            <div class="card-image-section">
+              <div class="card-image-placeholder" [style.background-image]="getTourImage(tour)">
                 <span class="category-badge">{{ getCategoryLabel(tour.category) }}</span>
                 <app-status-badge 
+                  class="status-badge-overlay"
                   [status]="tour.status" 
                   [needsReplacement]="tour.needsReplacement || false">
                 </app-status-badge>
               </div>
             </div>
-            <p class="tour-description">{{ tour.description }}</p>
-            <div class="tour-meta">
-              <span class="difficulty">{{ getDifficultyLabel(tour.difficulty) }}</span>
-              <span class="date">{{ formatDate(tour.startDate) }}</span>
-              <span class="price">{{ formatPrice(tour.price) }}</span>
+
+            <!-- Content Section -->
+            <div class="card-content">
+              <h2 class="card-title">{{ tour.name }}</h2>
+              <p class="card-description">{{ tour.description }}</p>
+              
+              <!-- Meta Info -->
+              <div class="card-meta-row">
+                <span class="meta-difficulty">{{ getDifficultyLabel(tour.difficulty) }}</span>
+                <span class="meta-date">{{ formatDate(tour.startDate) }}</span>
+              </div>
+
+              <!-- Rating & Price -->
+              <div class="card-info-row">
+                <div class="rating-section">
+                  @if (tour.averageRating !== null && tour.averageRating !== undefined) {
+                    <span class="card-rating">⭐ {{ tour.averageRating.toFixed(1) }}/5</span>
+                  } @else {
+                    <span class="no-rating">No ratings yet</span>
+                  }
+                </div>
+                <span class="card-price">{{ formatPrice(tour.price) }}</span>
+              </div>
+
+              <div class="card-keypoints">
+                <span>{{ tour.keyPoints.length }} key points</span>
+              </div>
             </div>
-            <div class="tour-rating">
-              @if (tour.averageRating !== null && tour.averageRating !== undefined) {
-                <span class="rating-display">⭐ {{ tour.averageRating.toFixed(1) }}/5</span>
-              } @else {
-                <span class="no-rating">No ratings yet</span>
-              }
-            </div>
-            <div class="tour-keypoints">
-              <span>{{ tour.keyPoints.length }} key points</span>
-            </div>
-            <div class="tour-actions">
-              <a [routerLink]="['/tours', tour.id]" class="view-details-btn">View Details</a>
+
+            <!-- Actions Section -->
+            <div class="card-actions">
+              <a [routerLink]="['/tours', tour.id]" class="btn-view-details">View Details</a>
               @if (canAddToCart(tour)) {
                 <button 
-                  class="add-to-cart-btn"
+                  class="btn-add-cart"
                   (click)="addToCart(tour.id)"
                   [disabled]="addingToCartId === tour.id">
                   @if (addingToCartId === tour.id) {
@@ -68,13 +83,19 @@
                 </button>
               }
               @if (isTourist && isInCart(tour.id)) {
-                <span class="in-cart-label">In Cart</span>
+                <span class="status-label in-cart">In Cart</span>
+              }
+              @if (isTourist && isAlreadyPurchased(tour.id)) {
+                <span class="status-label purchased">Already Purchased</span>
+              }
+              @if (isTourist && isTourPast(tour) && !isAlreadyPurchased(tour.id) && !isCanceled(tour)) {
+                <span class="status-label past">Tour Ended</span>
               }
               @if (isCanceled(tour)) {
-                <span class="canceled-label">Canceled</span>
+                <span class="status-label canceled">Canceled</span>
               }
               @if (hasReplacementRequested(tour) && !isCanceled(tour)) {
-                <span class="replacement-label">Awaiting Replacement</span>
+                <span class="status-label replacement">Awaiting Replacement</span>
               }
             </div>
           </div>

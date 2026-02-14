@@ -263,6 +263,28 @@
   border: 1px solid var(--color-primary);
 }
 
+.purchased-notice {
+  font-size: var(--font-size-sm);
+  color: var(--color-info);
+  background: rgba(138, 177, 201, 0.15);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  margin: 0;
+  border: 1px solid var(--color-info);
+}
+
+.past-notice {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  background: rgba(136, 136, 136, 0.15);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  margin: 0;
+  border: 1px solid var(--color-text-muted);
+}
+
 /* Actions Section */
 .tour-actions-section {
   padding: var(--spacing-xl);

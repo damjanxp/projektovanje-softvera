@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './layout/home/home.component';
 import { LoginComponent } from './layout/login/login.component';
+import { RegisterComponent } from './layout/register/register.component';
 import { ForbiddenComponent } from './layout/forbidden/forbidden.component';
 import { NotFoundComponent } from './layout/not-found/not-found.component';
 import { TouristAreaComponent } from './features/tourist-area/tourist-area.component';
@@ -26,6 +27,7 @@ import { roleGuard } from './core/guards/role.guard';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'forbidden', component: ForbiddenComponent },
   
   // Public tour routes (no auth required)

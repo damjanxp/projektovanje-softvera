@@ -132,5 +132,15 @@ export class HomeComponent implements OnInit {
     if (rating === null || rating === undefined) return 'No ratings';
     return `⭐ ${rating.toFixed(1)}`;
   }
+
+  getTourImage(tour: TourDto): string {
+    const firstKp = tour.keyPoints?.length
+      ? [...tour.keyPoints].sort((a, b) => a.order - b.order)[0]
+      : null;
+    if (firstKp?.imageUrl) {
+      return `url('${firstKp.imageUrl}')`;
+    }
+    return '';
+  }
 }
 

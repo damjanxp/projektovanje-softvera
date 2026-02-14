@@ -2,8 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CartService, PurchaseService } from '../../core/services';
-import { ApiResponse, CartDto, PurchaseResponse, BonusPointsDto } from '../../shared/models';
+import { CartService, PurchaseService, BalanceService } from '../../core/services';
+import { ApiResponse, CartDto, CartItemDto, PurchaseResponse, BonusPointsDto } from '../../shared/models';
 
 @Component({
   selector: 'app-cart',
@@ -15,6 +15,7 @@ import { ApiResponse, CartDto, PurchaseResponse, BonusPointsDto } from '../../sh
 export class CartComponent implements OnInit {
   private cartService = inject(CartService);
   private purchaseService = inject(PurchaseService);
+  private balanceService = inject(BalanceService);
   private router = inject(Router);
 
   cart: CartDto | null = null;
@@ -96,6 +97,14 @@ export class CartComponent implements OnInit {
       return;
     }
 
+    const finalPrice = this.displayedPrice;
+
+    // Check balance before proceeding
+    if (finalPrice > 0 && !this.balanceService.deductFunds(finalPrice)) {
+      this.error = 'Insufficient funds. Please top up your balance.';
+      return;
+    }
+
     this.purchasing = true;
     this.error = null;
     this.successMessage = null;
@@ -104,8 +113,8 @@ export class CartComponent implements OnInit {
       next: (response: ApiResponse<PurchaseResponse>) => {
         this.purchasing = false;
         if (response.success && response.data) {
-          const { finalPrice, usedBonusPoints } = response.data;
-          this.successMessage = `Purchase successful! Final price: $${finalPrice.toFixed(2)}`;
+          const { finalPrice: serverPrice, usedBonusPoints } = response.data;
+          this.successMessage = `Purchase successful! Final price: $${serverPrice.toFixed(2)}`;
           if (usedBonusPoints > 0) {
             this.successMessage += ` (Used ${usedBonusPoints} bonus points)`;
           }
@@ -114,11 +123,19 @@ export class CartComponent implements OnInit {
             this.router.navigate(['/']);
           }, 2000);
         } else {
+          // Rollback balance on backend error
+          if (finalPrice > 0) {
+            this.balanceService.addFunds(finalPrice);
+          }
           this.error = response.error?.message || 'Purchase failed';
         }
       },
       error: (err: { error?: { error?: { message?: string } } }) => {
         this.purchasing = false;
+        // Rollback balance on backend error
+        if (finalPrice > 0) {
+          this.balanceService.addFunds(finalPrice);
+        }
         this.error = err.error?.error?.message || 'An error occurred during purchase';
       }
     });
@@ -148,11 +165,26 @@ export class CartComponent implements OnInit {
     return this.loading || this.purchasing || this.removingItemId !== null;
   }
 
+  get currentBalance(): number {
+    return this.balanceService.getBalance();
+  }
+
+  get insufficientFunds(): boolean {
+    return this.displayedPrice > 0 && this.currentBalance < this.displayedPrice;
+  }
+
   formatDate(dateString: string): string {
     return new Date(dateString).toLocaleDateString();
   }
 
   formatPrice(price: number): string {
     return `$${price.toFixed(2)}`;
+  }
+
+  getItemImage(item: CartItemDto): string {
+    if (item.imageUrl) {
+      return `url('${item.imageUrl}')`;
+    }
+    return '';
   }
 }

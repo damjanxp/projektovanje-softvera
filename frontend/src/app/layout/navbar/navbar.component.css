@@ -5,12 +5,14 @@
   align-items: center;
   padding: 0.75rem 2rem;
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  color: var(--color-text-primary);
+  color: #ffffff;
   box-shadow: var(--shadow-md);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 1000;
-  position: relative;
 }
 
 /* ============ BRAND (LEFT) ============ */
@@ -35,6 +37,7 @@
   height: 60px;
   width: auto;
   object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 /* ============ CENTER NAV ============ */
@@ -66,7 +69,7 @@
   gap: 0.25rem;
   padding: 0.5rem 1rem;
   text-decoration: none;
-  color: var(--color-text-primary);
+  color: #ffffff;
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
   background: transparent;
@@ -81,7 +84,7 @@
 
 .nav-icon-item.active {
   background-color: var(--color-secondary);
-  color: var(--color-text-light);
+  color: #ffffff;
 }
 
 .nav-icon-item.active .nav-icon {
@@ -98,19 +101,22 @@
   height: 24px;
   object-fit: contain;
   opacity: 0.9;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .nav-icon-label {
   font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* ============ DIVIDER ============ */
 .nav-divider {
   width: 1px;
   height: 32px;
-  background: var(--color-border);
+  background: rgba(255, 255, 255, 0.3);
   opacity: 0.5;
   margin: 0 0.25rem;
 }
@@ -126,9 +132,20 @@
 }
 
 .username {
-  color: var(--color-text-primary);
+  color: #ffffff;
   font-weight: 500;
   font-size: 0.9rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.balance-display {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .role-badge {
@@ -138,33 +155,37 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .role-tourist {
-  background-color: var(--color-info);
-  color: var(--color-text-light);
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
 }
 
 .role-guide {
-  background-color: var(--color-secondary);
-  color: var(--color-text-light);
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
 }
 
 .role-admin {
-  background-color: var(--color-accent);
-  color: var(--color-text-primary);
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
 }
 
 /* ============ LOGOUT BUTTON ============ */
 .logout-btn {
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
 }
 
 .logout-btn:hover {
-  background-color: var(--color-danger);
-  border-color: var(--color-danger);
-  color: var(--color-text-light);
+  background-color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
 }
 
 .logout-btn:hover .nav-icon {

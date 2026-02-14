@@ -18,11 +18,13 @@
       <!-- Guide extra links (LEFT) -->
       @if (isGuide) {
         <div class="nav-divider"></div>
-        <a routerLink="/guide/tours" routerLinkActive="active" class="nav-icon-item text-only">
+        <a routerLink="/guide/tours" routerLinkActive="active" class="nav-icon-item">
+          <img [src]="PNG_MYTOURS_PATH" alt="My Tours" class="nav-icon" />
           <span class="nav-icon-label">My Tours</span>
         </a>
         <div class="nav-divider"></div>
-        <a routerLink="/guide/replacements" routerLinkActive="active" class="nav-icon-item text-only">
+        <a routerLink="/guide/replacements" routerLinkActive="active" class="nav-icon-item">
+          <img [src]="PNG_REPLACEMENTS_PATH" alt="Replacements" class="nav-icon" />
           <span class="nav-icon-label">Replacements</span>
         </a>
       }
@@ -50,16 +52,12 @@
 
   <!-- RIGHT: User Info & Logout -->
   <div class="navbar-right">
-    @if (!isAuthenticated) {
-      <a routerLink="/login" routerLinkActive="active" class="nav-icon-item">
-        <img [src]="PNG_LOGIN_PATH" alt="Login" class="nav-icon" />
-        <span class="nav-icon-label">Login</span>
-      </a>
-    }
-    
     @if (isAuthenticated) {
       <div class="user-info">
         <span class="username">{{ username }}</span>
+        @if (isTourist) {
+          <span class="balance-display">${{ balanceService.balance$ | async | number:'1.2-2' }}</span>
+        }
         <span class="role-badge" [class]="'role-' + userRole?.toLowerCase()">{{ userRole }}</span>
       </div>
       <div class="nav-divider"></div>
@@ -67,6 +65,16 @@
         <img [src]="PNG_LOGOUT_PATH" alt="Logout" class="nav-icon" />
         <span class="nav-icon-label">Logout</span>
       </button>
+    } @else {
+      <a routerLink="/register" routerLinkActive="active" class="nav-icon-item">
+        <img [src]="PNG_LOGIN_PATH" alt="Register" class="nav-icon" />
+        <span class="nav-icon-label">Register</span>
+      </a>
+      <div class="nav-divider"></div>
+      <a routerLink="/login" routerLinkActive="active" class="nav-icon-item">
+        <img [src]="PNG_LOGIN_PATH" alt="Login" class="nav-icon" />
+        <span class="nav-icon-label">Login</span>
+      </a>
     }
   </div>
 </nav>

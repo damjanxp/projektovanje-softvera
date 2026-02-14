@@ -19,7 +19,10 @@ public class CartService : ICartService
 
     public async Task<ApiResponse<CartDto>> AddToCartAsync(Guid touristId, Guid tourId)
     {
-        var tour = await _dbContext.Set<Tour>().FirstOrDefaultAsync(t => t.Id == tourId);
+        var tour = await _dbContext.Set<Tour>()
+            .Include(t => t.KeyPoints)
+            .FirstOrDefaultAsync(t => t.Id == tourId);
+            
         if (tour == null)
         {
             return ApiResponse<CartDto>.Fail("TOUR_NOT_FOUND", "Tour not found.");
@@ -37,11 +40,15 @@ public class CartService : ICartService
             return ApiResponse<CartDto>.Fail("TOUR_ALREADY_IN_CART", "This tour is already in your cart.");
         }
 
+        var firstKeyPoint = tour.KeyPoints.OrderBy(kp => kp.Order).FirstOrDefault();
+
         cart.Add(new CartItemDto
         {
             TourId = tour.Id,
             Name = tour.Name,
-            Price = tour.Price
+            Price = tour.Price,
+            StartDate = tour.StartDate,
+            ImageUrl = firstKeyPoint?.ImageUrl
         });
 
         return await GetCartAsync(touristId);
