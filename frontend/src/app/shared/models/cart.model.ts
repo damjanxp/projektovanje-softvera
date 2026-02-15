@@ -3,6 +3,7 @@ export interface CartItemDto {
   name: string;
   price: number;
   startDate: string;
+  imageUrl?: string;
 }
 
 export interface CartDto {

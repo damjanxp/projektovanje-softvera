@@ -1,1 +1,13 @@
-﻿* { margin: 0; padding: 0; box-sizing: border-box; } .main-content { min-height: calc(100vh - 60px); }
+/* App Component Base Styles */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 76px; /* Height of navbar (60px logo + 16px padding) */
+}
+
+.main-content {
+  flex: 1;
+  background: var(--color-bg-main);
+}
+

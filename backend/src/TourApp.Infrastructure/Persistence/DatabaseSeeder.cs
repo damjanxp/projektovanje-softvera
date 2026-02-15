@@ -155,9 +155,9 @@ public static class DatabaseSeeder
             150.00m,
             DateTime.UtcNow.AddDays(30)
         );
-        tour1.AddKeyPoint(45.4215, -75.6972, "Trail Start", "Beginning of our mountain journey", "https://example.com/images/trail-start.jpg");
-        tour1.AddKeyPoint(45.4315, -75.6872, "Mountain Peak", "The highest point with panoramic views", "https://example.com/images/peak.jpg");
-        tour1.AddKeyPoint(45.4415, -75.6772, "Forest Rest Area", "Relaxing spot surrounded by pine trees", "https://example.com/images/forest.jpg");
+        tour1.AddKeyPoint(45.4215, -75.6972, "Trail Start", "Beginning of our mountain journey", "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxfHxuYXR1cmV8ZW58MHx8fHwxNzcxMDc5MDA2fDA&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour1.AddKeyPoint(45.4315, -75.6872, "Mountain Peak", "The highest point with panoramic views", "https://images.unsplash.com/photo-1518495973542-4542c06a5843?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwyfHxuYXR1cmV8ZW58MHx8fHwxNzcxMDc5MDA2fDA&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour1.AddKeyPoint(45.4415, -75.6772, "Forest Rest Area", "Relaxing spot surrounded by pine trees", "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwzfHxuYXR1cmV8ZW58MHx8fHwxNzcxMDc5MDA2fDA&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
         tour1.Publish();
 
         var tour2Id = Guid.Parse("88888888-8888-8888-8888-888888888888");
@@ -171,8 +171,8 @@ public static class DatabaseSeeder
             75.00m,
             DateTime.UtcNow.AddDays(15)
         );
-        tour2.AddKeyPoint(40.7128, -74.0060, "Modern Art Museum", "Contemporary art from around the world", "https://example.com/images/modern-art.jpg");
-        tour2.AddKeyPoint(40.7228, -74.0160, "Classical Gallery", "Renaissance and baroque paintings", "https://example.com/images/classical.jpg");
+        tour2.AddKeyPoint(40.7128, -74.0060, "Modern Art Museum", "Contemporary art from around the world", "https://images.unsplash.com/photo-1472396961693-142e6e269027?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHw0fHxuYXR1cmV8ZW58MHx8fHwxNzcxMDc5MDA2fDA&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour2.AddKeyPoint(40.7228, -74.0160, "Classical Gallery", "Renaissance and baroque paintings", "https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHw1fHxuYXR1cmV8ZW58MHx8fHwxNzcxMDc5MDA2fDA&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
         tour2.Publish();
 
         // Published tour by second guide (upcoming)
@@ -187,9 +187,9 @@ public static class DatabaseSeeder
             95.00m,
             DateTime.UtcNow.AddDays(20)
         );
-        tour3.AddKeyPoint(51.5074, -0.1278, "Central Market", "The heart of local food culture", "https://example.com/images/central-market.jpg");
-        tour3.AddKeyPoint(51.5174, -0.1378, "Street Food Alley", "Authentic street food experience", "https://example.com/images/street-food.jpg");
-        tour3.AddKeyPoint(51.5274, -0.1478, "Gourmet Restaurant", "Fine dining and wine tasting", "https://example.com/images/restaurant.jpg");
+        tour3.AddKeyPoint(51.5074, -0.1278, "Central Market", "The heart of local food culture", "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHw2fHxuYXR1cmV8ZW58MHx8fHwxNzcxMDc5MDA2fDA&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour3.AddKeyPoint(51.5174, -0.1378, "Street Food Alley", "Authentic street food experience", "https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHw3fHxuYXR1cmV8ZW58MHx8fHwxNzcxMDc5MDA2fDA&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour3.AddKeyPoint(51.5274, -0.1478, "Gourmet Restaurant", "Fine dining and wine tasting", "https://images.unsplash.com/photo-1529419412599-7bb870e11810?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHw4fHxuYXR1cmV8ZW58MHx8fHwxNzcxMDc5MDA2fDA&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
         tour3.Publish();
 
         // Draft tour (not yet published)
@@ -204,8 +204,8 @@ public static class DatabaseSeeder
             50.00m,
             DateTime.UtcNow.AddDays(45)
         );
-        tour4.AddKeyPoint(48.8566, 2.3522, "Fashion Boulevard", "Designer stores and luxury brands", "https://example.com/images/fashion.jpg");
-        tour4.AddKeyPoint(48.8666, 2.3622, "Local Boutiques", "Unique handmade items", "https://example.com/images/boutiques.jpg");
+        tour4.AddKeyPoint(48.8566, 2.3522, "Fashion Boulevard", "Designer stores and luxury brands", "https://images.unsplash.com/photo-1421789665209-c9b2a435e3dc?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHw5fHxuYXR1cmV8ZW58MHx8fHwxNzcxMDc5MDA2fDA&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour4.AddKeyPoint(48.8666, 2.3622, "Local Boutiques", "Unique handmade items", "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxMHx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
         // Not published yet - stays as Draft
 
         // Past tours (already completed) - for testing ratings and problems
@@ -220,8 +220,8 @@ public static class DatabaseSeeder
             60.00m,
             DateTime.UtcNow.AddDays(-6) // Completed 6 days ago
         );
-        tour5.AddKeyPoint(41.9028, 12.4964, "Ancient Forum", "Where history comes alive", "https://example.com/images/forum.jpg");
-        tour5.AddKeyPoint(41.9128, 12.5064, "Old Cathedral", "Beautiful medieval architecture", "https://example.com/images/cathedral.jpg");
+        tour5.AddKeyPoint(41.9028, 12.4964, "Ancient Forum", "Where history comes alive", "https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxMXx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour5.AddKeyPoint(41.9128, 12.5064, "Old Cathedral", "Beautiful medieval architecture", "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxMnx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
         tour5.Publish();
 
         var tour6Id = Guid.Parse("b1111111-1111-1111-1111-111111111111");
@@ -235,9 +235,9 @@ public static class DatabaseSeeder
             45.00m,
             DateTime.UtcNow.AddDays(-6.5) // Completed 6.5 days ago (within 7-day rating window)
         );
-        tour6.AddKeyPoint(34.0522, -118.2437, "Beach Entrance", "Starting point of our coastal journey", "https://example.com/images/beach-start.jpg");
-        tour6.AddKeyPoint(34.0622, -118.2537, "Rocky Overlook", "Perfect spot for sunset photos", "https://example.com/images/overlook.jpg");
-        tour6.AddKeyPoint(34.0722, -118.2637, "Lighthouse", "Historic lighthouse with ocean views", "https://example.com/images/lighthouse.jpg");
+        tour6.AddKeyPoint(34.0522, -118.2437, "Beach Entrance", "Starting point of our coastal journey", "https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxM3x8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour6.AddKeyPoint(34.0622, -118.2537, "Rocky Overlook", "Perfect spot for sunset photos", "https://images.unsplash.com/photo-1501854140801-50d01698950b?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxNHx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour6.AddKeyPoint(34.0722, -118.2637, "Lighthouse", "Historic lighthouse with ocean views", "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxNXx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
         tour6.Publish();
 
         var tour7Id = Guid.Parse("b2222222-2222-2222-2222-222222222222");
@@ -251,9 +251,9 @@ public static class DatabaseSeeder
             120.00m,
             DateTime.UtcNow.AddDays(-5) // Completed 5 days ago
         );
-        tour7.AddKeyPoint(38.2975, -122.2869, "Vineyard Estate", "First winery on our tour", "https://example.com/images/vineyard1.jpg");
-        tour7.AddKeyPoint(38.3075, -122.2969, "Cellar Experience", "Underground wine cellars", "https://example.com/images/cellar.jpg");
-        tour7.AddKeyPoint(38.3175, -122.3069, "Gourmet Pairing", "Wine and cheese pairing session", "https://example.com/images/pairing.jpg");
+        tour7.AddKeyPoint(38.2975, -122.2869, "Vineyard Estate", "First winery on our tour", "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxNnx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour7.AddKeyPoint(38.3075, -122.2969, "Cellar Experience", "Underground wine cellars", "https://images.unsplash.com/photo-1506260408121-e353d10b87c7?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxN3x8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour7.AddKeyPoint(38.3175, -122.3069, "Gourmet Pairing", "Wine and cheese pairing session", "https://images.unsplash.com/photo-1505820013142-f86a3439c5b2?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxOHx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
         tour7.Publish();
 
         var tour8Id = Guid.Parse("b3333333-3333-3333-3333-333333333333");
@@ -267,9 +267,9 @@ public static class DatabaseSeeder
             180.00m,
             DateTime.UtcNow.AddDays(-3) // Completed 3 days ago
         );
-        tour8.AddKeyPoint(37.8651, -119.5383, "Base Camp", "Gear up and safety briefing", "https://example.com/images/basecamp.jpg");
-        tour8.AddKeyPoint(37.8751, -119.5483, "Climbing Wall", "Vertical rock climbing challenge", "https://example.com/images/climbing.jpg");
-        tour8.AddKeyPoint(37.8851, -119.5583, "Zip Line Course", "Fly through the canopy", "https://example.com/images/zipline.jpg");
+        tour8.AddKeyPoint(37.8651, -119.5383, "Base Camp", "Gear up and safety briefing", "https://images.unsplash.com/photo-1508349937151-22b68b72d5b1?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxOXx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour8.AddKeyPoint(37.8751, -119.5483, "Climbing Wall", "Vertical rock climbing challenge", "https://images.unsplash.com/photo-1495584816685-4bdbf1b5057e?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwyMHx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour8.AddKeyPoint(37.8851, -119.5583, "Zip Line Course", "Fly through the canopy", "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwyMXx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
         tour8.Publish();
 
         var tour9Id = Guid.Parse("b4444444-4444-4444-4444-444444444444");
@@ -283,9 +283,9 @@ public static class DatabaseSeeder
             85.00m,
             DateTime.UtcNow.AddDays(-4) // Completed 4 days ago
         );
-        tour9.AddKeyPoint(40.7589, -73.9851, "Urban Landscape", "Capture the city skyline", "https://example.com/images/urban.jpg");
-        tour9.AddKeyPoint(40.7689, -73.9951, "Street Photography", "Candid moments in the city", "https://example.com/images/street.jpg");
-        tour9.AddKeyPoint(40.7789, -74.0051, "Golden Hour Spot", "Perfect lighting for portraits", "https://example.com/images/golden-hour.jpg");
+        tour9.AddKeyPoint(40.7589, -73.9851, "Urban Landscape", "Capture the city skyline", "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwyMnx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour9.AddKeyPoint(40.7689, -73.9951, "Street Photography", "Candid moments in the city", "https://images.unsplash.com/photo-1530908295418-a12e326966ba?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwyM3x8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
+        tour9.AddKeyPoint(40.7789, -74.0051, "Golden Hour Spot", "Perfect lighting for portraits", "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwyNHx8bmF0dXJlfGVufDB8fHx8MTc3MTA3OTAwNnww&ixlib=rb-4.1.0&w=900&h=600&fit=max&q=80");
         tour9.Publish();
 
         context.Tours.AddRange(tour1, tour2, tour3, tour4, tour5, tour6, tour7, tour8, tour9);

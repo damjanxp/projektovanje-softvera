@@ -32,6 +32,37 @@ export class AuthService {
     return isPlatformBrowser(this.platformId);
   }
 
+  register(registerData: {
+    username: string;
+    password: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    interests: number[];
+    wantsRecommendations: boolean;
+  }): Observable<ApiResponse<AuthResponse>> {
+    return this.http.post<ApiResponse<AuthResponse>>(`${environment.apiUrl}/auth/register-tourist`, registerData).pipe(
+      tap(response => {
+        if (response.success && response.data) {
+          this.setToken(response.data.token);
+          this.setUser(response.data);
+        }
+      }),
+      catchError(error => {
+        const errorMessage = error.error?.error?.message 
+          || error.error?.message 
+          || 'An error occurred during registration';
+        return of({
+          success: false,
+          error: {
+            code: 'REGISTRATION_ERROR',
+            message: errorMessage
+          }
+        } as ApiResponse<AuthResponse>);
+      })
+    );
+  }
+
   login(username: string, password: string): Observable<ApiResponse<AuthResponse>> {
     return this.http.post<ApiResponse<AuthResponse>>(`${environment.apiUrl}/auth/login`, {
       username,
@@ -44,7 +75,6 @@ export class AuthService {
         }
       }),
       catchError(error => {
-        console.error('Login error:', error);
         const errorMessage = error.error?.error?.message 
           || error.error?.message 
           || 'An error occurred during login';
@@ -64,7 +94,7 @@ export class AuthService {
       localStorage.removeItem(this.TOKEN_KEY);
       localStorage.removeItem(this.USER_KEY);
     }
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   getToken(): string | null {
@@ -177,8 +207,7 @@ export class AuthService {
       );
 
       return JSON.parse(jsonPayload);
-    } catch (error) {
-      console.error('Error decoding JWT:', error);
+    } catch {
       return null;
     }
   }

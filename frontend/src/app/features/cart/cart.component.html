@@ -20,82 +20,107 @@
         <a routerLink="/tours" class="browse-tours-btn">Browse Tours</a>
       </div>
     } @else {
-      <div class="cart-content">
-        <div class="cart-items">
-          <h2>Cart Items ({{ cart!.items.length }})</h2>
+      <div class="cart-layout">
+        <!-- Cart Items Section -->
+        <div class="cart-items-section">
+          <div class="section-header">
+            <h2>Cart Items</h2>
+            <span class="item-count">{{ cart!.items.length }} {{ cart!.items.length === 1 ? 'item' : 'items' }}</span>
+          </div>
           
-          @for (item of cart!.items; track item.tourId) {
-            <div class="cart-item" [class.removing]="removingItemId === item.tourId">
-              <div class="item-info">
-                <h3>{{ item.name }}</h3>
-                <p class="item-date">Start Date: {{ formatDate(item.startDate) }}</p>
+          <div class="items-list">
+            @for (item of cart!.items; track item.tourId) {
+              <div class="cart-item-card" [class.removing]="removingItemId === item.tourId">
+                <div class="item-header">
+                  <div class="item-image-placeholder" [style.background-image]="getItemImage(item)"></div>
+                </div>
+                <div class="item-content">
+                  <h3 class="item-title">{{ item.name }}</h3>
+                  <p class="item-date">
+                    <span class="date-label">Start Date:</span>
+                    {{ formatDate(item.startDate) }}
+                  </p>
+                  <div class="item-footer">
+                    <span class="item-price">{{ formatPrice(item.price) }}</span>
+                    <button 
+                      class="btn-remove" 
+                      (click)="removeItem(item.tourId)"
+                      [disabled]="isProcessing">
+                      @if (removingItemId === item.tourId) {
+                        Removing...
+                      } @else {
+                        Remove
+                      }
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="item-price">
-                {{ formatPrice(item.price) }}
-              </div>
-              <button 
-                class="remove-btn" 
-                (click)="removeItem(item.tourId)"
-                [disabled]="isProcessing">
-                @if (removingItemId === item.tourId) {
-                  Removing...
-                } @else {
-                  Remove
-                }
-              </button>
-            </div>
-          }
+            }
+          </div>
         </div>
 
-        <div class="cart-summary">
+        <!-- Order Summary Section -->
+        <div class="summary-section">
           <h2>Order Summary</h2>
           
-          <div class="summary-row">
-            <span>Subtotal:</span>
-            <span>{{ formatPrice(cart!.totalPrice) }}</span>
-          </div>
+          <div class="summary-details">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span class="amount">{{ formatPrice(cart!.totalPrice) }}</span>
+            </div>
 
-          <div class="bonus-section">
-            <div class="bonus-info">
-              <span>Available Bonus Points:</span>
-              @if (loadingBonus) {
-                <span>Loading...</span>
-              } @else {
-                <span class="bonus-points">{{ bonusPoints }}</span>
+            <div class="bonus-section">
+              <div class="bonus-header">
+                <span>Available Bonus Points</span>
+                @if (loadingBonus) {
+                  <span class="amount">Loading...</span>
+                } @else {
+                  <span class="bonus-amount">{{ bonusPoints }} pts</span>
+                }
+              </div>
+              
+              @if (bonusPoints > 0) {
+                <label class="bonus-checkbox">
+                  <input 
+                    type="checkbox" 
+                    [(ngModel)]="useBonus"
+                    [disabled]="isProcessing">
+                  <span>Use bonus points (-{{ formatPrice(discountAmount) }})</span>
+                </label>
               }
             </div>
-            
-            @if (bonusPoints > 0) {
-              <label class="bonus-toggle">
-                <input 
-                  type="checkbox" 
-                  [(ngModel)]="useBonus"
-                  [disabled]="isProcessing">
-                <span>Use bonus points ({{ formatPrice(discountAmount) }} discount)</span>
-              </label>
+
+            @if (useBonus && discountAmount > 0) {
+              <div class="summary-row discount-row">
+                <span>Bonus Discount</span>
+                <span class="amount discount">-{{ formatPrice(discountAmount) }}</span>
+              </div>
+            }
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-row total-row">
+              <span>Total</span>
+              <span class="total-amount">{{ formatPrice(displayedPrice) }}</span>
+            </div>
+
+            <div class="summary-row balance-row">
+              <span>Your Balance</span>
+              <span class="amount" [class.insufficient]="insufficientFunds">{{ formatPrice(currentBalance) }}</span>
+            </div>
+            @if (insufficientFunds) {
+              <p class="insufficient-msg">Insufficient funds. Please top up your balance.</p>
             }
           </div>
 
-          @if (useBonus && discountAmount > 0) {
-            <div class="summary-row discount">
-              <span>Bonus Discount:</span>
-              <span>-{{ formatPrice(discountAmount) }}</span>
-            </div>
-          }
-
-          <div class="summary-row total">
-            <span>Total:</span>
-            <span class="total-price">{{ formatPrice(displayedPrice) }}</span>
-          </div>
-
           <button 
-            class="confirm-btn"
+            class="btn-confirm-purchase"
             (click)="confirmPurchase()"
-            [disabled]="isProcessing || isEmpty">
+            [disabled]="isProcessing || isEmpty || insufficientFunds">
             @if (purchasing) {
-              Processing...
+              <span>Processing...</span>
             } @else {
-              Confirm Purchase
+              <span>Confirm Purchase</span>
             }
           </button>
         </div>

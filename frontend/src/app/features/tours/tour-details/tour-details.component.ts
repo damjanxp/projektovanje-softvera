@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { TourService, CartService, AuthService, RatingService } from '../../../core/services';
-import { ApiResponse, TourDto, InterestLabels, DifficultyLabels, TourStatusLabels, Interest, Difficulty, TourStatus } from '../../../shared/models';
+import { TourService, CartService, AuthService, RatingService, PurchaseService } from '../../../core/services';
+import { ApiResponse, TourDto, InterestLabels, DifficultyLabels, TourStatusLabels, Interest, Difficulty, TourStatus, PurchaseResultDto } from '../../../shared/models';
 import { RatingDto } from '../../../shared/models/rating.model';
 import { LeafletMapComponent, StatusBadgeComponent } from '../../../shared/components';
 
@@ -19,10 +19,12 @@ private tourService = inject(TourService);
 private cartService = inject(CartService);
 private authService = inject(AuthService);
 private ratingService = inject(RatingService);
+private purchaseService = inject(PurchaseService);
   
 tour: TourDto | null = null;
 ratings: RatingDto[] = [];
 averageRating: number | null = null;
+purchasedTourIds = new Set<string>();
 loading = false;
 loadingRatings = false;
 error: string | null = null;
@@ -38,6 +40,7 @@ Math = Math;
       this.loadRatings(tourId);
       if (this.isTourist) {
         this.loadCartItems();
+        this.loadPurchasedTours();
       }
     } else {
       this.error = 'Tour ID not provided';
@@ -95,6 +98,19 @@ Math = Math;
 
   loadCartItems(): void {
     this.cartService.getCart().subscribe();
+  }
+
+  loadPurchasedTours(): void {
+    this.purchaseService.getMyPurchases().subscribe({
+      next: (response: ApiResponse<PurchaseResultDto[]>) => {
+        if (response.success && response.data) {
+          this.purchasedTourIds = new Set(
+            response.data.flatMap(p => p.tours.map(t => t.tourId))
+          );
+        }
+      },
+      error: () => {}
+    });
   }
 
   addToCart(): void {
@@ -162,8 +178,20 @@ Math = Math;
       return this.tour?.status === TourStatus.Canceled;
     }
 
+    get needsReplacement(): boolean {
+      return this.tour?.needsReplacement === true;
+    }
+
     get canAddToCart(): boolean {
-        return this.isTourist && !this.isCanceled && !this.isInCart;
+        return this.isTourist && !this.isCanceled && !this.needsReplacement && !this.isInCart && !this.isAlreadyPurchased && !this.isTourPast;
+      }
+
+      get isAlreadyPurchased(): boolean {
+        return this.tour ? this.purchasedTourIds.has(this.tour.id) : false;
+      }
+
+      get isTourPast(): boolean {
+        return this.tour ? new Date(this.tour.startDate) < new Date() : false;
       }
 
       getStarArray(rating: number): boolean[] {

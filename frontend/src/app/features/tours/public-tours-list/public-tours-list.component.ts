@@ -4,8 +4,8 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { TourService, CartService, AuthService, RatingService } from '../../../core/services';
-import { ApiResponse, TourDto, InterestLabels, DifficultyLabels, Interest, Difficulty, TourStatus } from '../../../shared/models';
+import { TourService, CartService, AuthService, RatingService, PurchaseService } from '../../../core/services';
+import { ApiResponse, TourDto, InterestLabels, DifficultyLabels, Interest, Difficulty, TourStatus, PurchaseResultDto } from '../../../shared/models';
 import { StatusBadgeComponent } from '../../../shared/components';
 
 interface TourWithRating extends TourDto {
@@ -24,8 +24,10 @@ private tourService = inject(TourService);
 private cartService = inject(CartService);
 private authService = inject(AuthService);
 private ratingService = inject(RatingService);
+private purchaseService = inject(PurchaseService);
   
 tours: TourWithRating[] = [];
+purchasedTourIds = new Set<string>();
 loading = false;
 error: string | null = null;
 sortOrder: 'asc' | 'desc' = 'asc';
@@ -35,6 +37,7 @@ addingToCartId: string | null = null;
     this.loadTours();
     if (this.isTourist) {
       this.loadCartItems();
+      this.loadPurchasedTours();
     }
   }
 
@@ -82,6 +85,19 @@ addingToCartId: string | null = null;
 
   loadCartItems(): void {
     this.cartService.getCart().subscribe();
+  }
+
+  loadPurchasedTours(): void {
+    this.purchaseService.getMyPurchases().subscribe({
+      next: (response: ApiResponse<PurchaseResultDto[]>) => {
+        if (response.success && response.data) {
+          this.purchasedTourIds = new Set(
+            response.data.flatMap(p => p.tours.map(t => t.tourId))
+          );
+        }
+      },
+      error: () => {}
+    });
   }
 
   addToCart(tourId: string): void {
@@ -133,11 +149,38 @@ addingToCartId: string | null = null;
       return `$${price.toFixed(2)}`;
     }
 
-    isCanceled(tour: TourDto): boolean {
-      return tour.status === TourStatus.Canceled;
+    getTourImage(tour: TourDto): string {
+      const firstKp = tour.keyPoints?.length
+        ? [...tour.keyPoints].sort((a, b) => a.order - b.order)[0]
+        : null;
+      if (firstKp?.imageUrl) {
+        return `url('${firstKp.imageUrl}')`;
+      }
+      return '';
     }
 
-    canAddToCart(tour: TourDto): boolean {
-      return this.isTourist && !this.isCanceled(tour) && !this.isInCart(tour.id);
+    isCanceled(tour: TourDto): boolean {
+        return tour.status === TourStatus.Canceled;
+      }
+
+      hasReplacementRequested(tour: TourDto): boolean {
+        return tour.needsReplacement === true;
+      }
+
+      canAddToCart(tour: TourDto): boolean {
+        return this.isTourist 
+          && !this.isCanceled(tour) 
+          && !this.hasReplacementRequested(tour) 
+          && !this.isInCart(tour.id) 
+          && !this.isAlreadyPurchased(tour.id) 
+          && !this.isTourPast(tour);
+      }
+
+      isAlreadyPurchased(tourId: string): boolean {
+        return this.purchasedTourIds.has(tourId);
+      }
+
+      isTourPast(tour: TourDto): boolean {
+        return new Date(tour.startDate) < new Date();
+      }
     }
-  }

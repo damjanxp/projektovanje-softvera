@@ -46,25 +46,31 @@
               </div>
 
               @if (isTourist) {
-                      <div class="tour-cart-action">
-                        @if (isCanceled) {
-                          <p class="canceled-notice">This tour has been canceled and cannot be purchased.</p>
-                        } @else {
-                          <button 
-                            class="add-to-cart-btn"
-                            (click)="addToCart()"
-                            [disabled]="isInCart || addingToCart">
-                            @if (addingToCart) {
-                              Adding to Cart...
-                            } @else if (isInCart) {
-                              Already in Cart
-                            } @else {
-                              Add to Cart
-                            }
-                          </button>
-                        }
-                      </div>
-                    }
+                <div class="tour-cart-action">
+                  @if (isCanceled) {
+                    <p class="canceled-notice">This tour has been canceled and cannot be purchased.</p>
+                  } @else if (needsReplacement) {
+                    <p class="replacement-notice">This tour is awaiting a replacement guide and cannot be purchased at this time.</p>
+                  } @else if (isAlreadyPurchased) {
+                    <p class="purchased-notice">You have already purchased this tour.</p>
+                  } @else if (isTourPast) {
+                    <p class="past-notice">This tour has already ended and cannot be purchased.</p>
+                  } @else {
+                    <button 
+                      class="add-to-cart-btn"
+                      (click)="addToCart()"
+                      [disabled]="isInCart || addingToCart">
+                      @if (addingToCart) {
+                        Adding to Cart...
+                      } @else if (isInCart) {
+                        Already in Cart
+                      } @else {
+                        Add to Cart
+                      }
+                    </button>
+                  }
+                </div>
+              }
                   </div>
 
               <div class="tour-keypoints-section">

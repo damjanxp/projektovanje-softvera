@@ -1,48 +1,80 @@
 <nav class="navbar">
+  <!-- LEFT: Brand -->
   <div class="navbar-brand">
-    <a routerLink="/" class="brand-link">TourApp</a>
+    <a routerLink="/" class="brand-link">
+      <img [src]="PNG_LOGO_PATH" [alt]="APP_NAME" class="brand-logo" />
+    </a>
   </div>
   
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Home</a>
-    </li>
-    <li class="nav-item">
-      <a routerLink="/tours" routerLinkActive="active" class="nav-link">Tours</a>
-    </li>
-    
-    @if (!isAuthenticated) {
-      <li class="nav-item">
-        <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
-      </li>
-    }
-    
+  <!-- CENTER: Main Navigation with Icons -->
+  <div class="navbar-center">
     @if (isAuthenticated) {
-    <li class="nav-item">
-      <a [routerLink]="roleAreaLink" routerLinkActive="active" class="nav-link">My Area</a>
-    </li>
-    @if (userRole === 'Tourist') {
-      <li class="nav-item">
-        <a routerLink="/cart" routerLinkActive="active" class="nav-link">Cart</a>
-      </li>
+      <!-- My Area (LEFT) -->
+      <a [routerLink]="roleAreaLink" routerLinkActive="active" class="nav-icon-item">
+        <img [src]="PNG_MYAREA_PATH" alt="My Area" class="nav-icon" />
+        <span class="nav-icon-label">{{ roleAreaLabel }}</span>
+      </a>
+
+      <!-- Guide extra links (LEFT) -->
+      @if (isGuide) {
+        <div class="nav-divider"></div>
+        <a routerLink="/guide/tours" routerLinkActive="active" class="nav-icon-item">
+          <img [src]="PNG_MYTOURS_PATH" alt="My Tours" class="nav-icon" />
+          <span class="nav-icon-label">My Tours</span>
+        </a>
+        <div class="nav-divider"></div>
+        <a routerLink="/guide/replacements" routerLinkActive="active" class="nav-icon-item">
+          <img [src]="PNG_REPLACEMENTS_PATH" alt="Replacements" class="nav-icon" />
+          <span class="nav-icon-label">Replacements</span>
+        </a>
+      }
+
+      <div class="nav-divider"></div>
     }
-    @if (userRole === 'Guide') {
-      <li class="nav-item">
-        <a routerLink="/guide/tours" routerLinkActive="active" class="nav-link">My Tours</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/guide/replacements" routerLinkActive="active" class="nav-link">Replacements</a>
-      </li>
+
+    <!-- Tours (CENTER) -->
+    <a routerLink="/tours" routerLinkActive="active" class="nav-icon-item">
+      <img [src]="PNG_TOURS_PATH" alt="Tours" class="nav-icon" />
+      <span class="nav-icon-label">Tours</span>
+    </a>
+
+    @if (isAuthenticated) {
+      <!-- Cart (RIGHT - Tourist only) -->
+      @if (isTourist) {
+        <div class="nav-divider"></div>
+        <a routerLink="/cart" routerLinkActive="active" class="nav-icon-item">
+          <img [src]="PNG_CART_PATH" alt="Cart" class="nav-icon" />
+          <span class="nav-icon-label">Cart</span>
+        </a>
+      }
     }
-      <li class="nav-item">
-        <span class="nav-user">
-          <span class="username">{{ username }}</span>
-          <span class="role-badge" [class]="'role-' + userRole?.toLowerCase()">{{ userRole }}</span>
-        </span>
-      </li>
-      <li class="nav-item">
-        <button (click)="logout()" class="nav-link btn-logout">Logout</button>
-      </li>
+  </div>
+
+  <!-- RIGHT: User Info & Logout -->
+  <div class="navbar-right">
+    @if (isAuthenticated) {
+      <div class="user-info">
+        <span class="username">{{ username }}</span>
+        @if (isTourist) {
+          <span class="balance-display">${{ balanceService.balance$ | async | number:'1.2-2' }}</span>
+        }
+        <span class="role-badge" [class]="'role-' + userRole?.toLowerCase()">{{ userRole }}</span>
+      </div>
+      <div class="nav-divider"></div>
+      <button (click)="logout()" class="nav-icon-item logout-btn">
+        <img [src]="PNG_LOGOUT_PATH" alt="Logout" class="nav-icon" />
+        <span class="nav-icon-label">Logout</span>
+      </button>
+    } @else {
+      <a routerLink="/register" routerLinkActive="active" class="nav-icon-item">
+        <img [src]="PNG_LOGIN_PATH" alt="Register" class="nav-icon" />
+        <span class="nav-icon-label">Register</span>
+      </a>
+      <div class="nav-divider"></div>
+      <a routerLink="/login" routerLinkActive="active" class="nav-icon-item">
+        <img [src]="PNG_LOGIN_PATH" alt="Login" class="nav-icon" />
+        <span class="nav-icon-label">Login</span>
+      </a>
     }
-  </ul>
+  </div>
 </nav>
